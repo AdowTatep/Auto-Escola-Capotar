@@ -130,9 +130,8 @@ public class CadastroView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegistrarActionPerformed
-        usuarioDAO usuConnec = new usuarioDAO(); //Cria uma nova conexão baseada no DAO
-        
-        try {
+       try {
+            usuarioDAO usuConnec = new usuarioDAO(); //Cria uma nova conexão baseada no DAO
             if (!jNovoNome.getText().equals("") || !jNovoLogin.getText().equals("") || !jNovaSenha.getText().equals("") ) {
                 if (jAlunoRadio.isSelected()){
                     Aluno novoAluno = new Aluno(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), "Aluno");
@@ -159,12 +158,7 @@ public class CadastroView extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Faltou Driver!"); 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro no banco! \n"+ex.getMessage());
-        }
-        
-        
-        
-        
-        
+        }    
     }//GEN-LAST:event_jRegistrarActionPerformed
 
     /**

@@ -5,7 +5,13 @@
  */
 package view;
 
+import dao.usuarioDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import pessoa.Pessoa;
 
 /**
  *
@@ -101,16 +107,28 @@ public class PrincipalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLoginAcao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginAcao
-        switch (jLogin.getText()) {
-            case "aluno":
-                AlunoView aluTela = new AlunoView();
-                aluTela.setVisible(true);
-                this.dispose();
-                break;
-            case "professor":
-                break;
-            default:
-                break;
+        try {
+            usuarioDAO usuConnec = new usuarioDAO();
+            Pessoa usuario = new Pessoa(jLogin.getText(), jSenha.getText(), "", "");
+            usuario = usuConnec.getByLoginSenha(usuario);
+            
+            switch (usuario.getTipo()) {
+                case "Aluno":
+                    AlunoView aluTela = new AlunoView();
+                    aluTela.setVisible(true);
+                    this.dispose();
+                    break;
+                case "Professor":
+                    JOptionPane.showMessageDialog(this, "Professor ainda não implementado!");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(this, "Atendentes ainda não implementado!");
+                    break;
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLoginAcao
 

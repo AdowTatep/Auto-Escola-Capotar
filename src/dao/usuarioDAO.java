@@ -8,6 +8,7 @@ package dao;
 import conexaoBD.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import pessoa.Pessoa;
@@ -16,7 +17,7 @@ import pessoa.Pessoa;
  *
  * @author adowt
  */
-public class usuarioDAO implements genericsDAO<Pessoa, Integer>{
+public class usuarioDAO implements genericsDAO<Pessoa>{
 
     @Override
     public void inserir(Pessoa obj) throws ClassNotFoundException, SQLException {
@@ -34,27 +35,53 @@ public class usuarioDAO implements genericsDAO<Pessoa, Integer>{
 
     @Override
     public void alterar(Pessoa obj) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "UPDATE usuario "
+                + "login = ?"
+                + "senha = ?"
+                + "nome = ?"
+                + "tipo = ?"
+                + "WHERE login = ?";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        stm.setString(1, obj.getLogin());
+        stm.setString(2, obj.getSenha());
+        stm.setString(3, obj.getNome());
+        stm.setString(4, obj.getTipo());
+        stm.setString(5, obj.getLogin());
+        
+        stm.executeUpdate();
     }
 
     @Override
     public void apagar(Pessoa obj) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "DELETE FROM usuario WHERE login = ?";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        stm.setString(1, obj.getLogin());
     }
 
     @Override
-    public Pessoa getByID(Integer ID) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<Pessoa> getAll() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getQuant() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Pessoa getByLoginSenha(Pessoa obj) throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        stm.setString(1, obj.getLogin());
+        stm.setString(2, obj.getSenha());
+        
+        ResultSet rs = stm.executeQuery();
+        
+        if (rs.next()){
+            Pessoa usu = new Pessoa(rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("tipo"));
+            return usu;
+        } else {
+            return null;
+        }
     }
     
 }
