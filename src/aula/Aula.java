@@ -5,10 +5,14 @@
  */
 package aula;
 
+import pessoa.Professor;
+
 /**
  *
  * @author adowt
  */
 public class Aula {
-    
+    private int id;
+    private String tipo;
+    private Professor prof;
 }

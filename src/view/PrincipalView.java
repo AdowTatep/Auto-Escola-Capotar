@@ -5,6 +5,8 @@
  */
 package view;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author adowt
@@ -31,8 +33,8 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jCadastro = new javax.swing.JButton();
+        jLoginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,12 +46,17 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jLabel2.setText("Senha:");
 
-        jButton8.setText("Cadastro");
-
-        jButton9.setText("Login");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        jCadastro.setText("Cadastro");
+        jCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jCadastroActionPerformed(evt);
+            }
+        });
+
+        jLoginButton.setText("Login");
+        jLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLoginAcao(evt);
             }
         });
 
@@ -65,9 +72,9 @@ public class PrincipalView extends javax.swing.JFrame {
                     .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jButton9)
+                            .addComponent(jLoginButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8))
+                            .addComponent(jCadastro))
                         .addComponent(jSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -84,8 +91,8 @@ public class PrincipalView extends javax.swing.JFrame {
                 .addComponent(jSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton9)
-                    .addComponent(jButton8))
+                    .addComponent(jLoginButton)
+                    .addComponent(jCadastro))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -93,15 +100,26 @@ public class PrincipalView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        if (jLogin.getText() == "aluno") {
-            
-        } else if (jLogin.getText() == "professor") {
-            
-        } else {
-            
+    private void jLoginAcao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginAcao
+        switch (jLogin.getText()) {
+            case "aluno":
+                AlunoView aluTela = new AlunoView();
+                aluTela.setVisible(true);
+                this.dispose();
+                break;
+            case "professor":
+                break;
+            default:
+                break;
         }
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_jLoginAcao
+
+    private void jCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCadastroActionPerformed
+        CadastroView cada = new CadastroView(null, false);
+        
+        cada.setVisible(true);
+        
+    }//GEN-LAST:event_jCadastroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,11 +160,11 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton jCadastro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jLogin;
+    private javax.swing.JButton jLoginButton;
     private javax.swing.JTextField jSenha;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,5 @@ package aula;
  */
 public class Simulado {
     public String data;
-    public String professor;
     public String resultado;
 }
