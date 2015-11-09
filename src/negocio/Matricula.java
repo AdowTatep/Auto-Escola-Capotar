@@ -13,14 +13,11 @@ import pessoa.Aluno;
  */
 public class Matricula {
     private int numero;
-    private int valorTotalPago;
+    private float saldo;
 
-    public Matricula() {
-    }
-
-    public Matricula(int numero, int valorTotalPago) {
+    public Matricula(int numero, float saldo) {
         this.numero = numero;
-        this.valorTotalPago = valorTotalPago;
+        this.saldo = saldo;
     }
 
     public int getNumero() {
@@ -31,11 +28,11 @@ public class Matricula {
         this.numero = numero;
     }
 
-    public int getValorTotalPago() {
-        return valorTotalPago;
+    public float getSaldo() {
+        return saldo;
     }
 
-    public void setValorTotalPago(int valorTotalPago) {
-        this.valorTotalPago = valorTotalPago;
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
     }
 }

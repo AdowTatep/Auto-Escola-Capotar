@@ -11,5 +11,29 @@ package aula;
  */
 public class Simulado {
     public String data;
-    public String resultado;
+    public int resultado;
+
+    public Simulado() {
+    }
+
+    public Simulado(String data, int resultado) {
+        this.data = data;
+        this.resultado = resultado;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public int getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(int resultado) {
+        this.resultado = resultado;
+    }
 }

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import pessoa.Pessoa;
+import view.atendente.AtendenteView;
 
 /**
  *
@@ -123,7 +124,9 @@ public class PrincipalView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Professor ainda não implementado!");
                     break;
                 default:
-                    JOptionPane.showMessageDialog(this, "Atendentes ainda não implementado!");
+                    AtendenteView atenTela = new AtendenteView();
+                    atenTela.setVisible(true);
+                    this.dispose();
                     break;
             }
         } catch (ClassNotFoundException ex) {

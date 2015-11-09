@@ -16,6 +16,6 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/autocapotar", "root", "root");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/autocapotar", "root", "");
     }
 }

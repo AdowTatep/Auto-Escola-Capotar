@@ -33,6 +33,22 @@ public class Aluno extends Pessoa {
         this.aulas = aulas;
         this.matricula = matricula;
     }
+    
+    public Aluno(String login, String senha, String nome, String tipo, int numeroMat, float saldoMat) {
+        super(login, senha, nome, tipo);
+        this.simulados = null;
+        this.aulas = null;
+        this.matricula = new Matricula(numeroMat, saldoMat);
+    }
+
+    public Aluno(String login, String senha, String nome, String tipo, int numeroMat, float saldoMat, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        super(login, senha, nome, tipo);
+        this.simulados = simulados;
+        this.aulas = aulas;
+        this.matricula = new Matricula(numeroMat, saldoMat);
+    }
+    
+    
 
     public Matricula getMatricula() {
         return matricula;
