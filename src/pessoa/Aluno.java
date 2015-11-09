@@ -8,6 +8,7 @@ package pessoa;
 import aula.Aula;
 import aula.Simulado;
 import java.util.ArrayList;
+import negocio.Matricula;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class Aluno extends Pessoa {
     private ArrayList<Simulado> simulados;
     private ArrayList<Aula> aulas;
+    private Matricula matricula;
 
     public Aluno() {
         super();
@@ -23,6 +25,21 @@ public class Aluno extends Pessoa {
 
     public Aluno(String login, String senha, String nome, String tipo) {
         super(login, senha, nome, tipo);
+    }
+
+    public Aluno(ArrayList<Simulado> simulados, ArrayList<Aula> aulas, Matricula matricula, String login, String senha, String nome, String tipo) {
+        super(login, senha, nome, tipo);
+        this.simulados = simulados;
+        this.aulas = aulas;
+        this.matricula = matricula;
+    }
+
+    public Matricula getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
     }
 
     public ArrayList<Simulado> getSimulados() {
