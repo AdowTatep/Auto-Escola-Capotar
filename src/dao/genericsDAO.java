@@ -6,6 +6,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface genericsDAO<C> {
    public void alterar(C obj) throws SQLException, ClassNotFoundException;
    public void apagar(C obj) throws ClassNotFoundException, SQLException;
    public C getByLoginSenha(C obj) throws ClassNotFoundException, SQLException;
+   public ArrayList<C> procurar(C obj) throws ClassNotFoundException, SQLException;
 }

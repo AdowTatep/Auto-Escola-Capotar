@@ -111,7 +111,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private void jLoginAcao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginAcao
         try {
             usuarioDAO usuConnec = new usuarioDAO();
-            Pessoa usuario = new Pessoa(jLogin.getText(), jSenha.getText(), "", "");
+            Pessoa usuario = new Pessoa(jLogin.getText(), jSenha.getText(), "", "", "");
             usuario = usuConnec.getByLoginSenha(usuario);
             
             switch (usuario.getTipo()) {

@@ -23,12 +23,13 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
     public void inserir(Pessoa obj) throws ClassNotFoundException, SQLException {
         Connection c = ConnectionFactory.getConnection();
         
-        String sql = "INSERT INTO usuario VALUES(?,?,?,?);";
+        String sql = "INSERT INTO usuario VALUES(?,?,?,?,?);";
         PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getSenha());
         stm.setString(3, obj.getNome());
-        stm.setString(4, obj.getTipo());
+        stm.setString(4, obj.getCpf());
+        stm.setString(5, obj.getTipo());
         
         stm.executeUpdate();
     }
@@ -77,11 +78,51 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         ResultSet rs = stm.executeQuery();
         
         if (rs.next()){
-            Pessoa usu = new Pessoa(rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("tipo"));
+            Pessoa usu = new Pessoa(rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"));
             return usu;
         } else {
             return null;
         }
     }
+
+    @Override
+    public ArrayList<Pessoa> procurar(Pessoa obj) throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM usuario WHERE login is not null ";
+                
+        if (!obj.getLogin().equals("")) {
+            sql += "AND login = '"+obj.getLogin()+"' ";
+        }         
+        if (!obj.getSenha().equals("")) {
+            sql += "AND senha = '"+obj.getSenha()+"' ";
+        }
+        if (!obj.getNome().equals("")) {
+            sql += "AND nome = '"+obj.getNome()+"' ";
+        }   
+        if (!obj.getCpf().equals("")) {
+            sql += "AND cpf = '"+obj.getCpf()+"' ";
+        }
+        if (!obj.getTipo().equals("")) {
+            sql += "AND tipo = '"+obj.getTipo()+"' ";
+        }
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        System.out.println("Query: "+sql);
+        ResultSet rs = stm.executeQuery();
+        
+        if (rs.next()){
+            ArrayList<Pessoa> pessReturn = new ArrayList<>();
+            Pessoa alu = new Pessoa(rs.getString("login"), rs.getString("senha"),
+                    rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"));
+            pessReturn.add(alu);
+            return pessReturn;
+        } else {
+            return null;
+        }
+    }
+    
+    
     
 }

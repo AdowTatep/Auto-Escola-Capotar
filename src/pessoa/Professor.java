@@ -11,8 +11,8 @@ package pessoa;
  */
 public class Professor extends Pessoa {
 
-    public Professor(String login, String senha, String nome, String tipo) {
-        super(login, senha, nome, tipo);
+    public Professor(String login, String senha, String nome, String cpf, String tipo) {
+        super(login, senha, nome, cpf, tipo);
     }
 
     public Professor() {

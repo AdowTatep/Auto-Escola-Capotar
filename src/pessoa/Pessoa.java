@@ -5,15 +5,17 @@ public class Pessoa {
     private String login;
     private String senha;
     private String nome;
+    private String cpf;
     private String tipo;
 
     public Pessoa() {
     }
 
-    public Pessoa(String login, String senha, String nome, String tipo) {
+    public Pessoa(String login, String senha, String nome, String cpf, String tipo) {
         this.login = login;
         this.senha = senha;
         this.nome = nome;
+        this.cpf = cpf;
         this.tipo = tipo;
     }
 
@@ -41,6 +43,14 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -48,5 +58,6 @@ public class Pessoa {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+    
     
 }

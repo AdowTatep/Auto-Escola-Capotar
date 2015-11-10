@@ -31,8 +31,8 @@ public class alunoDAO implements genericsDAO<Aluno>{
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getSenha());
         stm.setString(3, obj.getNome());
-        stm.setString(4, obj.getTipo());
-        stm.setInt(5, obj.getMatricula().getNumero());
+        stm.setString(4, obj.getCpf());
+        stm.setString(5, obj.getTipo());
         stm.setString(6, obj.getLogin());
         stm.setInt(7, obj.getMatricula().getNumero());
         stm.setFloat(8, obj.getMatricula().getSaldo());
@@ -48,6 +48,7 @@ public class alunoDAO implements genericsDAO<Aluno>{
                 + "login = ? "
                 + "senha = ? "
                 + "nome = ? "
+                + "cpf = ? "
                 + "tipo = ?"
                 + "WHERE login = ?;"
                 
@@ -60,11 +61,12 @@ public class alunoDAO implements genericsDAO<Aluno>{
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getSenha());
         stm.setString(3, obj.getNome());
-        stm.setString(4, obj.getTipo());
-        stm.setString(5, obj.getLogin());
+        stm.setString(4, obj.getCpf());
+        stm.setString(5, obj.getTipo());
         stm.setString(6, obj.getLogin());
-        stm.setInt(7, obj.getMatricula().getNumero());
-        stm.setFloat(8, obj.getMatricula().getSaldo());
+        stm.setString(7, obj.getLogin());
+        stm.setInt(8, obj.getMatricula().getNumero());
+        stm.setFloat(9, obj.getMatricula().getSaldo());
         stm.executeUpdate();
     }
 
@@ -99,7 +101,7 @@ public class alunoDAO implements genericsDAO<Aluno>{
         
         if (rs.next()){
             Aluno alu = new Aluno(rs.getString("login"), rs.getString("senha"),
-                    rs.getString("nome"), rs.getString("tipo"), 
+                    rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
                     rs.getInt("numero_matricula"), rs.getFloat("saldo"));
             return alu;
         } else {
@@ -111,43 +113,38 @@ public class alunoDAO implements genericsDAO<Aluno>{
         Connection c = ConnectionFactory.getConnection();
         
         String sql = "SELECT * FROM usuario u, aluno_matricula a "
-                + "WHERE u.login=a.login ";
-        
-        System.out.println("Conectou");
+                + "WHERE u.login=a.login ";        
         
         if (!obj.getLogin().equals("")) {
-            sql += "AND login = "+obj.getLogin()+" ";
-            System.out.println("Add login");
+            sql += "AND login = '"+obj.getLogin()+"' ";
         }         
         if (!obj.getSenha().equals("")) {
-            sql += "AND senha = "+obj.getSenha()+" ";
-            System.out.println("Add senha");
+            sql += "AND senha = '"+obj.getSenha()+"' ";
         }
         if (!obj.getNome().equals("")) {
-            sql += "AND nome = "+obj.getNome()+" ";
-            System.out.println("add nome");
-        }         
+            sql += "AND nome = '"+obj.getNome()+"' ";
+        }   
+        if (!obj.getCpf().equals("")) {
+            sql += "AND cpf = '"+obj.getCpf()+"' ";
+        }
         if (!obj.getTipo().equals("")) {
-            sql += "AND tipo = "+obj.getTipo()+" ";
-            System.out.println("Add tipo");
+            sql += "AND tipo = '"+obj.getTipo()+"' ";
         }
         if (obj.getMatricula().getNumero() != 0) {
-            sql += "AND numero_matricula = "+obj.getMatricula().getNumero()+" ";
-            System.out.println("add matricula");
+            sql += "AND numero_matricula = '"+obj.getMatricula().getNumero()+"' ";
         }
         
         PreparedStatement stm = c.prepareStatement(sql);
         
+        System.out.println("Query: "+sql);
         ResultSet rs = stm.executeQuery();
-        System.out.println("Executou");
         
         if (rs.next()){
             ArrayList<Aluno> aluReturn = new ArrayList<>();
-            System.out.println("Criou lista");
+           
             Aluno alu = new Aluno(rs.getString("login"), rs.getString("senha"),
-                    rs.getString("nome"), rs.getString("tipo"), 
+                    rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
                     rs.getInt("numero_matricula"), rs.getFloat("saldo"));
-            
             
             aluReturn.add(alu);
             

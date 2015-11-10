@@ -6,12 +6,15 @@
 package view.atendente;
 
 import dao.alunoDAO;
+import dao.usuarioDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.xml.bind.DatatypeConverter;
 import pessoa.Aluno;
+import pessoa.Pessoa;
 
 /**
  *
@@ -40,7 +43,7 @@ public class PagamentoView extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jMatricula = new javax.swing.JTextField();
+        jCPF = new javax.swing.JTextField();
         jLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jAlunos = new javax.swing.JComboBox();
@@ -55,12 +58,17 @@ public class PagamentoView extends javax.swing.JDialog {
         jPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Pesquisa:");
 
         jLabel2.setText("Nome: ");
 
-        jLabel3.setText("Matrícula:");
+        jLabel3.setText("CPF:");
 
         jLabel4.setText("Login: ");
 
@@ -98,7 +106,7 @@ public class PagamentoView extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7))
                             .addComponent(jLabel8))
-                        .addGap(0, 86, Short.MAX_VALUE)))
+                        .addGap(0, 76, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPagarLayout.setVerticalGroup(
@@ -133,14 +141,14 @@ public class PagamentoView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
-                                .addComponent(jMatricula))
+                                .addComponent(jCPF))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +166,7 @@ public class PagamentoView extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +180,7 @@ public class PagamentoView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,26 +200,29 @@ public class PagamentoView extends javax.swing.JDialog {
 
     private void jPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPesquisarActionPerformed
         try {
-            Aluno aluPesq = new Aluno(jLogin.getText(), null, jNome.getText(), "Aluno", 
-                    Integer.parseInt(jMatricula.getText()), 0.0f);
-            System.out.println("Criou Aluno");
-            //Cria um aluno para inserir no dao da busca
+            Pessoa pessoaPesq;
+            pessoaPesq = new Pessoa(jLogin.getText(), "", jNome.getText(), jCPF.getText(), "Aluno");             
+            //Cria uma pessoa para inserir no dao da busca
             
-            alunoDAO dao = new alunoDAO();//Cria o dao aluno para fazer a busca
-            System.out.println("Criou dao");
-            ArrayList<Aluno> listaAlu = new ArrayList<>();//Cria uma lista para preencher com a busca
-            System.out.println("Criou lsita");
-            listaAlu = dao.procurar(aluPesq);//preenche a lista com o resultado dos alunos
-            System.out.println("Pesquisou");
+            usuarioDAO dao = new usuarioDAO();//Cria o dao usu para fazer a busca
             
-            DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jAlunos.getModel();//Pega o model da combo
-            System.out.println("Alterou");
+            ArrayList<Pessoa> listaAlu = new ArrayList<>();//Cria uma lista para preencher com a busca
+            
+            listaAlu = dao.procurar(pessoaPesq);//preenche a lista com o resultado dos alunos
+            
+            
+            DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jAlunos.getModel();//Pega o model da combo e bota em uma variável para fácil uso
             
             cbModel.removeAllElements();//Remove os elementos dentro da combo box
             
-            for (Aluno aluAdd:listaAlu) { //cria um for each para cada aluno na lista
-                cbModel.addElement(aluAdd.getNome()+" Mat: "+aluAdd.getMatricula().getNumero());//adiciona o aluno na combo box
+            for (Pessoa pessAdd:listaAlu) { //cria um for each para cada aluno na lista
+                cbModel.addElement(pessAdd.getNome()+" CPF: "+ pessAdd.getCpf());
+                //adiciona na combo box
             }
+            
+            
+            
+            jPagar.setVisible(true);
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PagamentoView.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,6 +230,10 @@ public class PagamentoView extends javax.swing.JDialog {
             Logger.getLogger(PagamentoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jPesquisarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jPagar.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -265,6 +280,7 @@ public class PagamentoView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAlunos;
     private javax.swing.JButton jButton1;
+    private javax.swing.JTextField jCPF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -274,7 +290,6 @@ public class PagamentoView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jLogin;
-    private javax.swing.JTextField jMatricula;
     private javax.swing.JTextField jNome;
     private javax.swing.JLabel jNomeAluno;
     private javax.swing.JPanel jPagar;

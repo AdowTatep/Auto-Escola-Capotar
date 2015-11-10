@@ -23,32 +23,33 @@ public class Aluno extends Pessoa {
         super();
     }
 
-    public Aluno(String login, String senha, String nome, String tipo) {
-        super(login, senha, nome, tipo);
+    public Aluno(String login, String senha, String nome, String cpf, String tipo) {
+        super(login, senha, nome, cpf, tipo);
+        this.simulados = null;
+        this.aulas = null;
+        this.matricula = new Matricula(0, 0);
     }
 
-    public Aluno(ArrayList<Simulado> simulados, ArrayList<Aula> aulas, Matricula matricula, String login, String senha, String nome, String tipo) {
-        super(login, senha, nome, tipo);
+    public Aluno(String login, String senha, String nome, String cpf, String tipo, Matricula matricula, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        super(login, senha, nome, cpf, tipo);
         this.simulados = simulados;
         this.aulas = aulas;
         this.matricula = matricula;
     }
     
-    public Aluno(String login, String senha, String nome, String tipo, int numeroMat, float saldoMat) {
-        super(login, senha, nome, tipo);
+    public Aluno(String login, String senha, String nome, String cpf, String tipo, int numeroMat, float saldoMat) {
+        super(login, senha, nome, cpf, tipo);
         this.simulados = null;
         this.aulas = null;
         this.matricula = new Matricula(numeroMat, saldoMat);
     }
 
-    public Aluno(String login, String senha, String nome, String tipo, int numeroMat, float saldoMat, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
-        super(login, senha, nome, tipo);
+    public Aluno(String login, String senha, String nome, String cpf, String tipo, int numeroMat, float saldoMat, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        super(login, senha, nome, cpf, tipo);
         this.simulados = simulados;
         this.aulas = aulas;
         this.matricula = new Matricula(numeroMat, saldoMat);
     }
-    
-    
 
     public Matricula getMatricula() {
         return matricula;
@@ -73,6 +74,5 @@ public class Aluno extends Pessoa {
     public void setAulas(ArrayList<Aula> aulas) {
         this.aulas = aulas;
     }
-    
     
 }

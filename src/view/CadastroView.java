@@ -48,6 +48,8 @@ public class CadastroView extends javax.swing.JDialog {
         jAtendenteRadio = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jNovoNome = new javax.swing.JTextField();
+        jCPF = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,6 +79,10 @@ public class CadastroView extends javax.swing.JDialog {
 
         jLabel3.setText("Nome:");
 
+        jCPF.setToolTipText("");
+
+        jLabel4.setText("Seu CPF:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +103,9 @@ public class CadastroView extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addComponent(jLabel2)
                         .addComponent(jNovaSenha)
-                        .addComponent(jNovoNome)))
+                        .addComponent(jNovoNome)
+                        .addComponent(jCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                        .addComponent(jLabel4)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,6 +116,10 @@ public class CadastroView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNovoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,12 +127,12 @@ public class CadastroView extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNovoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jAlunoRadio)
                     .addComponent(jProfessorRadio)
                     .addComponent(jAtendenteRadio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(jRegistrar)
                 .addContainerGap())
         );
@@ -134,17 +146,17 @@ public class CadastroView extends javax.swing.JDialog {
             usuarioDAO usuConnec = new usuarioDAO(); //Cria uma nova conexão baseada no DAO
             if (!jNovoNome.getText().equals("") || !jNovoLogin.getText().equals("") || !jNovaSenha.getText().equals("") ) {
                 if (jAlunoRadio.isSelected()){
-                    Aluno novoAluno = new Aluno(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), "Aluno");
+                    Aluno novoAluno = new Aluno(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Aluno");
                     usuConnec.inserir(novoAluno); //Se aluno estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
                 } else if (jProfessorRadio.isSelected()) {
-                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), "Professor");
+                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Professor");
                     usuConnec.inserir(novoProf);//Se professor estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
                 } else if (jAtendenteRadio.isSelected()) {
-                    Pessoa novaPess = new Pessoa(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), "Atendente");
+                    Pessoa novaPess = new Pessoa(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Atendente");
                     usuConnec.inserir(novaPess);//Se Atendente estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
@@ -207,9 +219,11 @@ public class CadastroView extends javax.swing.JDialog {
     private javax.swing.ButtonGroup groupTipo;
     private javax.swing.JRadioButton jAlunoRadio;
     private javax.swing.JRadioButton jAtendenteRadio;
+    private javax.swing.JTextField jCPF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField jNovaSenha;
     private javax.swing.JTextField jNovoLogin;
     private javax.swing.JTextField jNovoNome;
