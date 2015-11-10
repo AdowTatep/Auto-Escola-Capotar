@@ -5,14 +5,16 @@ CREATE DATABASE autoCapotar;
 USE autoCapotar;
 
 CREATE TABLE usuario (
-	login VARCHAR(20) PRIMARY KEY NOT NULL,
+	login VARCHAR(20) NOT NULL,
     senha VARCHAR(20) NOT NULL,
     nome VARCHAR(100),
-    tipo VARCHAR(20) NOT NULL
+    cpf char(11), 
+    tipo VARCHAR(20) NOT NULL,
+    primary key(login, cpf)
 );
 
 INSERT INTO usuario VALUES
-('admin', 'admin', '', 'Atendente');
+('admin', 'admin', '', '', 'Atendente');
 
 CREATE TABLE aulas (
 	id_aula int(10) primary key auto_increment not null,
