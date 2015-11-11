@@ -25,7 +25,7 @@ public class alunoDAO implements genericsDAO<Aluno>{
         Connection c = ConnectionFactory.getConnection();
         
         String sql = "INSERT INTO usuario VALUES(?,?,?,?,?);"
-                + "INSERT INTO aluno_matricula VALUES(?,?,?);";
+                + "INSERT INTO aluno_matricula(login, saldo) VALUES(?,?);";
         
         PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
@@ -34,8 +34,7 @@ public class alunoDAO implements genericsDAO<Aluno>{
         stm.setString(4, obj.getCpf());
         stm.setString(5, obj.getTipo());
         stm.setString(6, obj.getLogin());
-        stm.setInt(7, obj.getMatricula().getNumero());
-        stm.setFloat(8, obj.getMatricula().getSaldo());
+        stm.setFloat(7, obj.getMatricula().getSaldo());
         
         stm.executeUpdate();
     }

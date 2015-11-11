@@ -7,12 +7,16 @@ package view.atendente;
 
 import dao.alunoDAO;
 import dao.usuarioDAO;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
+import negocio.Matricula;
 import pessoa.Aluno;
 import pessoa.Pessoa;
 
@@ -22,6 +26,8 @@ import pessoa.Pessoa;
  */
 public class PagamentoView extends javax.swing.JDialog {
 
+    
+    ArrayList<Pessoa> listaAlu = new ArrayList<>();//Cria uma lista para preencher com a busca
     /**
      * Creates new form PagamentoView
      */
@@ -52,10 +58,11 @@ public class PagamentoView extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jSaldoAluno = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSaldoNovo = new javax.swing.JTextField();
         jPesquisar = new javax.swing.JButton();
+        jAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -73,18 +80,34 @@ public class PagamentoView extends javax.swing.JDialog {
         jLabel4.setText("Login: ");
 
         jAlunos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Faça uma busca!" }));
+        jAlunos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jAlunosItemStateChanged(evt);
+            }
+        });
 
         jNomeAluno.setText("NOME");
 
         jLabel5.setText("Saldo atual de");
 
         jButton1.setText("Inserir Pagamento");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText(":");
 
-        jLabel7.setText("SALDO");
+        jSaldoAluno.setText("SALDO");
 
         jLabel8.setText("Saldo a ser inserido em R$:");
+
+        jSaldoNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSaldoNovoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPagarLayout = new javax.swing.GroupLayout(jPagar);
         jPagar.setLayout(jPagarLayout);
@@ -104,9 +127,9 @@ public class PagamentoView extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7))
+                                .addComponent(jSaldoAluno))
                             .addComponent(jLabel8))
-                        .addGap(0, 76, Short.MAX_VALUE)))
+                        .addGap(0, 114, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPagarLayout.setVerticalGroup(
@@ -117,14 +140,14 @@ public class PagamentoView extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addComponent(jNomeAluno)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jSaldoAluno))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSaldoNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPesquisar.setText("Pesquisar");
@@ -134,39 +157,45 @@ public class PagamentoView extends javax.swing.JDialog {
             }
         });
 
+        jAtualizar.setText("Att");
+        jAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jCPF))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLogin, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jNome)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4))
-                                        .addGap(0, 194, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPesquisar))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(33, 33, 33)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(54, 54, 54)
+                            .addComponent(jCPF))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(54, 54, 54)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLogin, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jNome)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPesquisar)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,10 +217,12 @@ public class PagamentoView extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jPesquisar)
                 .addGap(18, 18, 18)
-                .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -206,7 +237,7 @@ public class PagamentoView extends javax.swing.JDialog {
             
             usuarioDAO dao = new usuarioDAO();//Cria o dao usu para fazer a busca
             
-            ArrayList<Pessoa> listaAlu = new ArrayList<>();//Cria uma lista para preencher com a busca
+            
             
             listaAlu = dao.procurar(pessoaPesq);//preenche a lista com o resultado dos alunos
             
@@ -215,25 +246,61 @@ public class PagamentoView extends javax.swing.JDialog {
             
             cbModel.removeAllElements();//Remove os elementos dentro da combo box
             
+            cbModel.addElement("Escolha um aluno");
+            
             for (Pessoa pessAdd:listaAlu) { //cria um for each para cada aluno na lista
-                cbModel.addElement(pessAdd.getNome()+" CPF: "+ pessAdd.getCpf());
+                cbModel.addElement(pessAdd.getNome()+". CPF: "+ pessAdd.getCpf());
                 //adiciona na combo box
             }
             
-            
-            
-            jPagar.setVisible(true);
-            
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PagamentoView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
-            Logger.getLogger(PagamentoView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
         }
     }//GEN-LAST:event_jPesquisarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jPagar.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
+
+    private void jAlunosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jAlunosItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jAlunosItemStateChanged
+
+    private void jAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAtualizarActionPerformed
+        //Cria um aluno passando a pessoa selecionada 
+        Aluno alu = new Aluno(listaAlu.get(jAlunos.getSelectedIndex()-1));
+               
+        //Modifica o nome do aluno para aparecer
+        jNomeAluno.setText(alu.getNome());               
+        jSaldoAluno.setText(Float.toString(alu.getMatricula().getSaldo()));
+                
+        jPagar.setVisible(true);        
+    }//GEN-LAST:event_jAtualizarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            float saldoNovo = Float.parseFloat(jSaldoNovo.getText());
+            
+            //Cria um aluno passando a pessoa selecionada
+            Aluno alu = new Aluno(listaAlu.get(jAlunos.getSelectedIndex()-1), 0, saldoNovo);
+            
+            alunoDAO aluDAO = new alunoDAO();
+            
+            aluDAO.inserir(alu);
+            JOptionPane.showMessageDialog(this, "Saldo adicionado!");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jSaldoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaldoNovoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSaldoNovoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,6 +346,7 @@ public class PagamentoView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAlunos;
+    private javax.swing.JButton jAtualizar;
     private javax.swing.JButton jButton1;
     private javax.swing.JTextField jCPF;
     private javax.swing.JLabel jLabel1;
@@ -287,13 +355,13 @@ public class PagamentoView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jLogin;
     private javax.swing.JTextField jNome;
     private javax.swing.JLabel jNomeAluno;
     private javax.swing.JPanel jPagar;
     private javax.swing.JButton jPesquisar;
+    private javax.swing.JLabel jSaldoAluno;
     private javax.swing.JTextField jSaldoNovo;
     // End of variables declaration//GEN-END:variables
 }

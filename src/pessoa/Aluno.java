@@ -22,8 +22,25 @@ public class Aluno extends Pessoa {
     public Aluno() {
         super();
     }
+    
+    public Aluno(Pessoa pess) {
+        //Esse construtor cria um aluno vazio recebendo uma pessoa
+        super(pess.getLogin(), pess.getSenha(), pess.getNome(), pess.getCpf(), pess.getTipo());
+        this.simulados = null;
+        this.aulas = null;
+        this.matricula = new Matricula(0, 0);
+    }
+    public Aluno(Pessoa pess, Matricula matricula, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        //Esse construtor cria um aluno completo recebendo pessoa
+        super(pess.getLogin(), pess.getSenha(), pess.getNome(), pess.getCpf(), pess.getTipo());
+        this.simulados = simulados;
+        this.aulas = aulas;
+        this.matricula = matricula;
+    }
+    
 
     public Aluno(String login, String senha, String nome, String cpf, String tipo) {
+        //Esse construtor cria um aluno nulo com infos de pessoa
         super(login, senha, nome, cpf, tipo);
         this.simulados = null;
         this.aulas = null;
@@ -31,6 +48,7 @@ public class Aluno extends Pessoa {
     }
 
     public Aluno(String login, String senha, String nome, String cpf, String tipo, Matricula matricula, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        //Esse construtor cria um aluno com tudo preenchido
         super(login, senha, nome, cpf, tipo);
         this.simulados = simulados;
         this.aulas = aulas;
@@ -38,13 +56,23 @@ public class Aluno extends Pessoa {
     }
     
     public Aluno(String login, String senha, String nome, String cpf, String tipo, int numeroMat, float saldoMat) {
+        //Esse construtor cria um aluno preenchendo a matricula
         super(login, senha, nome, cpf, tipo);
+        this.simulados = null;
+        this.aulas = null;
+        this.matricula = new Matricula(numeroMat, saldoMat);
+    }
+    
+    public Aluno(Pessoa pess, int numeroMat, float saldoMat) {
+        //Esse construtor recebe uma pessoa e cria um aluno preenchendo a matricula
+        super(pess.getLogin(), pess.getSenha(), pess.getNome(), pess.getCpf(), pess.getTipo());
         this.simulados = null;
         this.aulas = null;
         this.matricula = new Matricula(numeroMat, saldoMat);
     }
 
     public Aluno(String login, String senha, String nome, String cpf, String tipo, int numeroMat, float saldoMat, ArrayList<Simulado> simulados, ArrayList<Aula> aulas) {
+        //Esse construtor cria um aluno completo
         super(login, senha, nome, cpf, tipo);
         this.simulados = simulados;
         this.aulas = aulas;

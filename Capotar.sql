@@ -35,7 +35,7 @@ CREATE TABLE aulas_aluno (
 
 CREATE TABLE aluno_matricula (
 	login VARCHAR(20),
-	numero_matricula int(10),
+	numero_matricula int(10) auto_increment,
 	saldo float(5,2),
     CONSTRAINT fk_mat_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
