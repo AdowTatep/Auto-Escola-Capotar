@@ -5,6 +5,7 @@
  */
 package view;
 
+import dao.alunoDAO;
 import view.aluno.AlunoView;
 import dao.usuarioDAO;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import pessoa.Aluno;
 import pessoa.Pessoa;
 import view.atendente.AtendenteView;
 
@@ -39,18 +41,16 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jLogin = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jCadastro = new javax.swing.JButton();
         jLoginButton = new javax.swing.JButton();
+        jSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLogin.setToolTipText("");
 
         jLabel1.setText("Login:");
-
-        jSenha.setToolTipText("");
 
         jLabel2.setText("Senha:");
 
@@ -68,22 +68,27 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
+        jSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLoginButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCadastro))
-                        .addComponent(jSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLogin)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLoginButton)
+                        .addGap(64, 64, 64)
+                        .addComponent(jCadastro))
+                    .addComponent(jSenha))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -114,11 +119,21 @@ public class PrincipalView extends javax.swing.JFrame {
             Pessoa usuario = new Pessoa(jLogin.getText(), jSenha.getText(), "", "", "");
             usuario = usuConnec.getByLoginSenha(usuario);
             
+            //Pega o tipo de usuário e abre uma tela correspondente
             switch (usuario.getTipo()) {
                 case "Aluno":
-                    AlunoView aluTela = new AlunoView();
-                    aluTela.setVisible(true);
-                    this.dispose();
+                    alunoDAO aluDAO = new alunoDAO();
+                    
+                    //Pesquisa se o aluno já confirmou sua matrícula ou não
+                    if(aluDAO.getByLoginSenha(new Aluno(usuario)) != null) {
+                        //Se ele já confirmou sua matrícula a tela abre
+                        AlunoView aluTela = new AlunoView();
+                        aluTela.setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Você precisa confirmar sua matrícula!\n"
+                                                            + "Vá até o CFC e insira um saldo com os atendentes!");
+                    }                 
                     break;
                 case "Professor":
                     JOptionPane.showMessageDialog(this, "Professor ainda não implementado!");
@@ -130,9 +145,9 @@ public class PrincipalView extends javax.swing.JFrame {
                     break;
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro na aplicação!\nContate o desenvolvedor!");
         } catch (SQLException ex) {
-            Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
     }//GEN-LAST:event_jLoginAcao
 
@@ -142,6 +157,12 @@ public class PrincipalView extends javax.swing.JFrame {
         cada.setVisible(true);
         
     }//GEN-LAST:event_jCadastroActionPerformed
+
+    private void jSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSenhaActionPerformed
+        //Se enter for pressionado no campo de senha
+        //Executa a ação do botão login
+        jLoginAcao(evt);
+    }//GEN-LAST:event_jSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,6 +208,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jLogin;
     private javax.swing.JButton jLoginButton;
-    private javax.swing.JTextField jSenha;
+    private javax.swing.JPasswordField jSenha;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,8 +31,7 @@ CREATE TABLE aulas (
 
 CREATE TABLE aulas_aluno (
 	id_aula int(10),
-    login VARCHAR(20),    
-    isPago tinyint(1),
+    login VARCHAR(20),
     CONSTRAINT fk_aula_aluno FOREIGN KEY (id_aula) REFERENCES aulas(id_aula)
 );
 
@@ -49,18 +48,3 @@ CREATE TABLE aluno_simulados(
     nota_resultado int(3),
     CONSTRAINT fk_simula_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
-
-SELECT * FROM usuario u, aluno_matricula a WHERE u.login=a.login AND u.login = 'aluno' AND u.senha = 'aluno';
-
-INSERT INTO aluno_matricula(login, saldo) VALUES('aluno',900.0);
-
-SELECT * FROM usuario WHERE login AND a.login = 'aluno' AND u.senha = 'aluno';
-
-SELECT * FROM usuario u, aluno_matricula a WHERE u.login=a.login AND a.login = 'aluno' AND u.senha = 'aluno';
-
-DELETE FROM aluno_matricula WHERE login='aluno';
-
-
-UPDATE aluno_matricula SET login = 'aluno' , saldo = 1000.0 WHERE login = 'aluno';
-
-UPDATE aluno_matricula SET login = 'aluno' , saldo = 1200.0 WHERE login = 'aluno';

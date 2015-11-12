@@ -251,7 +251,7 @@ public class PagamentoView extends javax.swing.JDialog {
             //Adiciona o texto "ecolha um aluno"
             cbModel.addElement("Escolha um aluno");
             
-            //cria um for each para cada aluno na lista
+            //cria um foreach para cada aluno na lista
             for (Pessoa pessAdd:listaAlu) { 
                 //adiciona cada pessoa na combo box
                 cbModel.addElement(pessAdd.getNome()+". CPF: "+ pessAdd.getCpf());
