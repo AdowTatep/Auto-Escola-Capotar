@@ -31,6 +31,8 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         stm.setString(4, obj.getCpf());
         stm.setString(5, obj.getTipo());
         
+        //Imprime o statement no console
+        System.out.println(stm);
         stm.executeUpdate();
     }
 
@@ -38,11 +40,11 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
     public void alterar(Pessoa obj) throws SQLException, ClassNotFoundException {
         Connection c = ConnectionFactory.getConnection();
         
-        String sql = "UPDATE usuario "
-                + "login = ?"
-                + "senha = ?"
-                + "nome = ?"
-                + "tipo = ?"
+        String sql = "UPDATE usuario SET "
+                + "login = ?, "
+                + "senha = ?, "
+                + "nome = ?, "
+                + "tipo = ? "
                 + "WHERE login = ?";
         
         PreparedStatement stm = c.prepareStatement(sql);
@@ -52,6 +54,8 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         stm.setString(4, obj.getTipo());
         stm.setString(5, obj.getLogin());
         
+        //Imprime o statement no console
+        System.out.println(stm);
         stm.executeUpdate();
     }
 
@@ -63,6 +67,10 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         
         PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
+        
+        //Imprime o statement no console
+        System.out.println(stm);
+        stm.executeUpdate();
     }
 
     @Override
@@ -75,6 +83,8 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getSenha());
         
+        //Imprime o statement no console
+        System.out.println(stm);
         ResultSet rs = stm.executeQuery();
         
         if (rs.next()){
@@ -109,7 +119,8 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         
         PreparedStatement stm = c.prepareStatement(sql);
         
-        System.out.println("Query: "+sql);
+        //Imprime o statement no console
+        System.out.println(stm);
         ResultSet rs = stm.executeQuery();
         
         if (rs.next()){

@@ -16,6 +16,9 @@ CREATE TABLE usuario (
 INSERT INTO usuario VALUES
 ('admin', 'admin', '', '', 'Atendente');
 
+INSERT INTO usuario VALUES
+('aluno', 'aluno', 'Aluno', '12345678912', 'Aluno');
+
 CREATE TABLE aulas (
 	id_aula int(10) primary key auto_increment not null,
     tipo char(7) not null,
@@ -35,8 +38,8 @@ CREATE TABLE aulas_aluno (
 
 CREATE TABLE aluno_matricula (
 	login VARCHAR(20),
-	numero_matricula int(10) auto_increment,
-	saldo float(5,2),
+	numero_matricula int(10) primary key auto_increment,
+	saldo float(8,2),
     CONSTRAINT fk_mat_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
 
@@ -46,3 +49,18 @@ CREATE TABLE aluno_simulados(
     nota_resultado int(3),
     CONSTRAINT fk_simula_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
+
+SELECT * FROM usuario u, aluno_matricula a WHERE u.login=a.login AND u.login = 'aluno' AND u.senha = 'aluno';
+
+INSERT INTO aluno_matricula(login, saldo) VALUES('aluno',900.0);
+
+SELECT * FROM usuario WHERE login AND a.login = 'aluno' AND u.senha = 'aluno';
+
+SELECT * FROM usuario u, aluno_matricula a WHERE u.login=a.login AND a.login = 'aluno' AND u.senha = 'aluno';
+
+DELETE FROM aluno_matricula WHERE login='aluno';
+
+
+UPDATE aluno_matricula SET login = 'aluno' , saldo = 1000.0 WHERE login = 'aluno';
+
+UPDATE aluno_matricula SET login = 'aluno' , saldo = 1200.0 WHERE login = 'aluno';

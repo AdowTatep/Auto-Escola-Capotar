@@ -56,7 +56,7 @@ public class PagamentoView extends javax.swing.JDialog {
         jPagar = new javax.swing.JPanel();
         jNomeAluno = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jInserirPagamento = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jSaldoAluno = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -90,10 +90,10 @@ public class PagamentoView extends javax.swing.JDialog {
 
         jLabel5.setText("Saldo atual de");
 
-        jButton1.setText("Inserir Pagamento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jInserirPagamento.setText("Inserir Pagamento");
+        jInserirPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jInserirPagamentoActionPerformed(evt);
             }
         });
 
@@ -116,7 +116,7 @@ public class PagamentoView extends javax.swing.JDialog {
             .addGroup(jPagarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jInserirPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSaldoNovo)
                     .addGroup(jPagarLayout.createSequentialGroup()
                         .addGroup(jPagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +146,7 @@ public class PagamentoView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSaldoNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(jInserirPagamento)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -231,28 +231,31 @@ public class PagamentoView extends javax.swing.JDialog {
 
     private void jPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPesquisarActionPerformed
         try {
+            
+            //Cria uma pessoa para inserir no dao da busca
             Pessoa pessoaPesq;
             pessoaPesq = new Pessoa(jLogin.getText(), "", jNome.getText(), jCPF.getText(), "Aluno");             
-            //Cria uma pessoa para inserir no dao da busca
             
-            usuarioDAO dao = new usuarioDAO();//Cria o dao usu para fazer a busca
+            //Cria o dao usu para fazer a busca
+            usuarioDAO dao = new usuarioDAO();
             
+            //preenche a lista com o resultado dos alunos
+            listaAlu = dao.procurar(pessoaPesq);
             
+            //Pega o model da combo e bota em uma variável para fácil uso
+            DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jAlunos.getModel();
             
-            listaAlu = dao.procurar(pessoaPesq);//preenche a lista com o resultado dos alunos
+            //Remove os elementos dentro da combo box
+            cbModel.removeAllElements();
             
-            
-            DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jAlunos.getModel();//Pega o model da combo e bota em uma variável para fácil uso
-            
-            cbModel.removeAllElements();//Remove os elementos dentro da combo box
-            
+            //Adiciona o texto "ecolha um aluno"
             cbModel.addElement("Escolha um aluno");
             
-            for (Pessoa pessAdd:listaAlu) { //cria um for each para cada aluno na lista
+            //cria um for each para cada aluno na lista
+            for (Pessoa pessAdd:listaAlu) { 
+                //adiciona cada pessoa na combo box
                 cbModel.addElement(pessAdd.getNome()+". CPF: "+ pessAdd.getCpf());
-                //adiciona na combo box
-            }
-            
+            }            
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
@@ -269,34 +272,75 @@ public class PagamentoView extends javax.swing.JDialog {
     }//GEN-LAST:event_jAlunosItemStateChanged
 
     private void jAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAtualizarActionPerformed
-        //Cria um aluno passando a pessoa selecionada 
-        Aluno alu = new Aluno(listaAlu.get(jAlunos.getSelectedIndex()-1));
-               
-        //Modifica o nome do aluno para aparecer
-        jNomeAluno.setText(alu.getNome());               
-        jSaldoAluno.setText(Float.toString(alu.getMatricula().getSaldo()));
-                
-        jPagar.setVisible(true);        
+        try {
+            //Cria um aluno passando a pessoa selecionada
+            Aluno alu = new Aluno(listaAlu.get(jAlunos.getSelectedIndex()-1));
+            
+            //Cria a dao para buscar um aluno
+            alunoDAO aluDAO = new alunoDAO();
+            
+            if(aluDAO.getByLoginSenha(alu) != null){
+                //Busca um aluno usando o aluno selecionado
+                //para poder pegar o saldo corretamente
+                alu = aluDAO.getByLoginSenha(alu);
+            }
+            
+            //Modifica o nome e o saldo do aluno para aparecer no painel            
+            jNomeAluno.setText(alu.getNome());
+            jSaldoAluno.setText(Float.toString(alu.getMatricula().getSaldo()));
+            
+            //Deixa o painel visível
+            jPagar.setVisible(true);
+            
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+        }
     }//GEN-LAST:event_jAtualizarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jInserirPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jInserirPagamentoActionPerformed
         try {
+            //Converte o número digitado para float
             float saldoNovo = Float.parseFloat(jSaldoNovo.getText());
             
             //Cria um aluno passando a pessoa selecionada
             Aluno alu = new Aluno(listaAlu.get(jAlunos.getSelectedIndex()-1), 0, saldoNovo);
             
+            //Cria a dao aluno para ser usada
             alunoDAO aluDAO = new alunoDAO();
             
-            aluDAO.inserir(alu);
-            JOptionPane.showMessageDialog(this, "Saldo adicionado!");
+            //Se já existir um aluno na tabela aluno_matricula
+            //quer dizer que ele já foi matriculado e quer somente
+            //adicionar mais crédito à sua conta
+            if(aluDAO.getByLoginSenha(alu)!=null){
+                //Busca o aluno
+                alu = aluDAO.getByLoginSenha(alu);
+                
+                //Altera o saldo desse aluno já somando com o saldo
+                //já existente
+                alu.getMatricula().setSaldo(alu.getMatricula().getSaldo() + saldoNovo);
+                //Altera passando o novo saldo
+                aluDAO.alterar(alu);
+            }else{
+                //Senão existir ele insere um novo                
+                aluDAO.inserir(alu);
+                //Pega o aluno atualizado
+                alu = aluDAO.getByLoginSenha(alu);
+            }
+            
+            JOptionPane.showMessageDialog(this, "Saldo adicionado!\n"
+                    + "Seu número de matrícula de "+alu.getNome()+" é: "+alu.getMatricula().getNumero());
+            
+            //Some com o painel
+            jPagar.setVisible(false);
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jInserirPagamentoActionPerformed
 
     private void jSaldoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaldoNovoActionPerformed
         // TODO add your handling code here:
@@ -347,8 +391,8 @@ public class PagamentoView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAlunos;
     private javax.swing.JButton jAtualizar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JTextField jCPF;
+    private javax.swing.JButton jInserirPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

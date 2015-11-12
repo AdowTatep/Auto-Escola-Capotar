@@ -24,48 +24,66 @@ public class alunoDAO implements genericsDAO<Aluno>{
     public void inserir(Aluno obj) throws ClassNotFoundException, SQLException {
         Connection c = ConnectionFactory.getConnection();
         
-        String sql = "INSERT INTO usuario VALUES(?,?,?,?,?);"
-                + "INSERT INTO aluno_matricula(login, saldo) VALUES(?,?);";
+        usuarioDAO usuDAO = new usuarioDAO();
         
-        PreparedStatement stm = c.prepareStatement(sql);
-        stm.setString(1, obj.getLogin());
-        stm.setString(2, obj.getSenha());
-        stm.setString(3, obj.getNome());
-        stm.setString(4, obj.getCpf());
-        stm.setString(5, obj.getTipo());
-        stm.setString(6, obj.getLogin());
-        stm.setFloat(7, obj.getMatricula().getSaldo());
+        //Busca o usuário na tabela usuario se já existir usuario
+        //com essas informações ele somente insere na tabela
+        //aluno matricula
+        if(usuDAO.getByLoginSenha(obj) != null) {
+            String sql = "INSERT INTO aluno_matricula(login, saldo) VALUES(?,?);";
+            
+            PreparedStatement stm = c.prepareStatement(sql);
+            
+            stm.setString(1, obj.getLogin());
+            stm.setFloat(2, obj.getMatricula().getSaldo());
+            
+            //Imprime o statement no console
+            System.out.println(stm);
+            stm.executeUpdate();
+        } else {
+            //Se nenhum usuario existir na tabela usuario
+            //Insira um usuario
+            usuDAO.inserir(obj);
+            
+            //E só depois insira na tabela matrícula
+            String sql = "INSERT INTO aluno_matricula(login, saldo) VALUES(?,?);";            
+            
+            PreparedStatement stm = c.prepareStatement(sql);
+            
+            stm.setString(1, obj.getLogin());
+            stm.setFloat(2, obj.getMatricula().getSaldo());
+            
+            //Imprime o statement no console
+            System.out.println(stm);
+            stm.executeUpdate();
+        }
         
-        stm.executeUpdate();
     }
 
     @Override
     public void alterar(Aluno obj) throws SQLException, ClassNotFoundException {
         Connection c = ConnectionFactory.getConnection();
         
-        String sql =  "UPDATE usuario "
-                + "login = ? "
-                + "senha = ? "
-                + "nome = ? "
-                + "cpf = ? "
-                + "tipo = ?"
-                + "WHERE login = ?;"
-                
-                + "UPDATE aluno_matricula "
-                + "login = ? "
-                + "numero_matricula = ? "
-                + "saldo = ?";
-        PreparedStatement stm = c.prepareStatement(sql);
+        //Todos os alunos tem que ter um login então
+        //ao alterar na tabela aluno_matricula
+        //será alterado na tabela usuario tambem
+        usuarioDAO usuDAO = new usuarioDAO();
         
+        usuDAO.alterar(obj);
+        
+        
+        String sql = "UPDATE aluno_matricula SET "
+                + "login = ? , "                
+                + "saldo = ? "
+                + "WHERE login = ?;";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
-        stm.setString(2, obj.getSenha());
-        stm.setString(3, obj.getNome());
-        stm.setString(4, obj.getCpf());
-        stm.setString(5, obj.getTipo());
-        stm.setString(6, obj.getLogin());
-        stm.setString(7, obj.getLogin());
-        stm.setInt(8, obj.getMatricula().getNumero());
-        stm.setFloat(9, obj.getMatricula().getSaldo());
+        stm.setFloat(2, obj.getMatricula().getSaldo());
+        stm.setString(3, obj.getLogin());
+        
+        //Imprime o statement no console
+        System.out.println(stm);
         stm.executeUpdate();
     }
 
@@ -74,14 +92,14 @@ public class alunoDAO implements genericsDAO<Aluno>{
         Connection c = ConnectionFactory.getConnection();
         
         String sql =  "DELETE FROM aluno_matricula "
-                + "WHERE login = ?;"
-                + "DELETE FROM usuario "
-                + "WHERE login = ?";
+                + "WHERE login = ?;";
         
         PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
-        stm.setString(2, obj.getLogin());
         stm.executeUpdate();
+        
+        usuarioDAO usuDAO = new usuarioDAO();
+        usuDAO.apagar(obj);
     }
 
     @Override
@@ -90,14 +108,14 @@ public class alunoDAO implements genericsDAO<Aluno>{
         
         String sql = "SELECT * FROM usuario u, aluno_matricula a "
                 + "WHERE u.login=a.login "
-                + "AND login = ? AND senha = ?";
+                + "AND a.login = ? AND u.senha = ?";
         
         PreparedStatement stm = c.prepareStatement(sql);
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getSenha());
         
         ResultSet rs = stm.executeQuery();
-        
+        System.out.println(stm);
         if (rs.next()){
             Aluno alu = new Aluno(rs.getString("login"), rs.getString("senha"),
                     rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
