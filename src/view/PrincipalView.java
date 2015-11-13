@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import pessoa.Aluno;
 import pessoa.Pessoa;
 import view.atendente.AtendenteView;
+import view.professor.ProfessorView;
 
 /**
  *
@@ -136,7 +137,9 @@ public class PrincipalView extends javax.swing.JFrame {
                     }                 
                     break;
                 case "Professor":
-                    JOptionPane.showMessageDialog(this, "Professor ainda não implementado!");
+                    ProfessorView profTela = new ProfessorView();
+                    profTela.setVisible(true);
+                    this.dispose();
                     break;
                 default:
                     AtendenteView atenTela = new AtendenteView();

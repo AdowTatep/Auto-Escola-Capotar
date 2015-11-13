@@ -143,15 +143,19 @@ public class CadastroView extends javax.swing.JDialog {
 
     private void jRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegistrarActionPerformed
        try {
-            usuarioDAO usuConnec = new usuarioDAO(); //Cria uma nova conexão baseada no DAO
+            //Cria uma nova conexão baseada no DAO
+            usuarioDAO usuConnec = new usuarioDAO();
+            
+            //Se os campos estão preenchidos
             if (!jNovoNome.getText().equals("") || !jNovoLogin.getText().equals("") || !jNovaSenha.getText().equals("") ) {
+                //Se X radio está selecionadl
                 if (jAlunoRadio.isSelected()){
                     Aluno novoAluno = new Aluno(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Aluno");
                     usuConnec.inserir(novoAluno); //Se aluno estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
                 } else if (jProfessorRadio.isSelected()) {
-                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Professor");
+                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Professor", 0,0);
                     usuConnec.inserir(novoProf);//Se professor estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
@@ -167,7 +171,7 @@ public class CadastroView extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Todos os campos precisam ser preenchidos!");
             }
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "Faltou Driver!"); 
+            JOptionPane.showMessageDialog(this, "Erro no Driver!"); 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro no banco! \n"+ex.getMessage());
         }    

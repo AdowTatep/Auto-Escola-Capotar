@@ -18,8 +18,6 @@ public class Aula {
     private String horaInicio;//Hora início
     private String horaFim;//Hora término
     private String data;//Dia da aula
-    private float valor;//Preço por essa aula
-    private boolean pago;//Pago ou não
 
     public Aula() {
     }

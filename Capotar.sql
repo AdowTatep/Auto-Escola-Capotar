@@ -4,6 +4,17 @@ CREATE DATABASE autoCapotar;
 
 USE autoCapotar;
 
+CREATE TABLE config (
+	preco_aula float(8,2),
+    minutos_aula int(3),
+    preco_simulado float(8,2)
+);
+
+INSERT INTO config VALUES
+(30.0,50,80.0);
+
+UPDATE config SET preco_aula = 30;
+
 CREATE TABLE usuario (
 	login VARCHAR(20) NOT NULL,
     senha VARCHAR(20) NOT NULL,
@@ -22,11 +33,11 @@ INSERT INTO usuario VALUES
 CREATE TABLE aulas (
 	id_aula int(10) primary key auto_increment not null,
     tipo char(7) not null,
-    login_professor int(10) not null,
+    login_professor VARCHAR(20) not null,
     nome_professor varchar(30),
     hora_inicio char(5),
     hora_fim char(5),
-    valor_aula float(5,2)
+    data_aula char(10)
 );
 
 CREATE TABLE aulas_aluno (
