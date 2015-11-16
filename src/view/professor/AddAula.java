@@ -5,18 +5,31 @@
  */
 package view.professor;
 
+import aula.Aula;
+import dao.aulaDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pessoa.Professor;
+
 /**
  *
  * @author adowt
  */
 public class AddAula extends javax.swing.JDialog {
-
+    private Professor profAtual;
     /**
      * Creates new form AddAula
      */
-    public AddAula(java.awt.Frame parent, boolean modal) {
+    public AddAula(java.awt.Frame parent, boolean modal, Professor profAtual) {
         super(parent, modal);
         initComponents();
+        this.profAtual = profAtual;
+        //Aqui eu passo o professor como parâmetro para a tela, assim
+        //eu posso usar ele para procurar aulas somente desse professor
     }
 
     /**
@@ -30,13 +43,18 @@ public class AddAula extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jAulasTab = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Suas aulas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jAulasTab.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -44,10 +62,18 @@ public class AddAula extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tipo", "Hora Inicio", "Hora Fim", "Data"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jAulasTab);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,6 +99,29 @@ public class AddAula extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            aulaDAO daoAula = new aulaDAO();
+            
+            //Procura as aulas e preenche uma lista com elas
+            Aula aulaProc = new Aula(0, "", profAtual, "", "", "");
+            ArrayList<Aula> listAulas = daoAula.procurar(aulaProc);
+            
+            //Pega o model da tabela
+            DefaultTableModel tabAulas = (DefaultTableModel) jAulasTab.getModel();
+            
+            //Preenche a tabela com esse model
+            for(Aula aulaAdd:listAulas) {
+                tabAulas.addRow(new Object[]{aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData()});
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -104,7 +153,7 @@ public class AddAula extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddAula dialog = new AddAula(new javax.swing.JFrame(), true);
+                AddAula dialog = new AddAula(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -117,8 +166,8 @@ public class AddAula extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable jAulasTab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

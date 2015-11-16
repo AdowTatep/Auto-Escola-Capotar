@@ -155,7 +155,7 @@ public class CadastroView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();
                 } else if (jProfessorRadio.isSelected()) {
-                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Professor", 0,0);
+                    Professor novoProf = new Professor(jNovoLogin.getText(), jNovaSenha.getText(), jNovoNome.getText(), jCPF.getText(), "Professor", "");
                     usuConnec.inserir(novoProf);//Se professor estiver selecionado
                     JOptionPane.showMessageDialog(this, "Cadastro feito com sucesso!");
                     this.dispose();

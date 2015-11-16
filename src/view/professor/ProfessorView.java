@@ -5,17 +5,27 @@
  */
 package view.professor;
 
+import dao.profDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import negocio.Matricula;
+import pessoa.Professor;
+
 /**
  *
  * @author adowt
  */
-public class ProfessorView extends javax.swing.JFrame {
 
+public class ProfessorView extends javax.swing.JFrame {
+    private Professor profAtual;
     /**
      * Creates new form ProfessorView
      */
-    public ProfessorView() {
+    public ProfessorView(Professor profAtual) {
         initComponents();
+        this.profAtual = profAtual;
     }
 
     /**
@@ -31,6 +41,11 @@ public class ProfessorView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jButton1.setText("Adicionar aula");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,10 +82,22 @@ public class ProfessorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AddAula addAula = new AddAula(this, true);
+        AddAula addAula = new AddAula(this, true, profAtual);
         
         addAula.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            //Quando a janela é criada, preenche o profAtual com o registro correto pois ele vem com null da principalView
+            profDAO daoProf = new profDAO();
+            profAtual = daoProf.getByLoginSenha(profAtual);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Não foi possível pegar o seu login atual/nErro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Não foi possível pegar o seu login atual/nErro no banco!/n"+ex.getMessage());
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -102,7 +129,7 @@ public class ProfessorView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfessorView().setVisible(true);
+                new ProfessorView(null).setVisible(true);
             }
         });
     }

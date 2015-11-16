@@ -11,39 +11,26 @@ package pessoa;
  */
 public class Professor extends Pessoa {
     
-    private int registro;
-    private float pagamento;
+    private String registro;
+
+    public Professor(Pessoa pess, String registro) {
+        super(pess.getLogin(), pess.getSenha(), pess.getNome(), pess.getCpf(), pess.getTipo());
+        this.registro = registro;
+    }
+    
+    public Professor(String registro, String login, String senha, String nome, String cpf, String tipo) {
+        super(login, senha, nome, cpf, tipo);
+        this.registro = registro;
+    }
 
     public Professor() {
     }
 
-    public Professor(String login, String senha, String nome, String cpf, String tipo, int registro, float pagamento) {
-        super(login, senha, nome, cpf, tipo);
-        this.registro = registro;
-        this.pagamento = pagamento;
-    }
-    
-    public Professor(Pessoa pess, int registro, float pagamento) {
-        super(pess.getLogin(), pess.getSenha(), pess.getNome(), pess.getCpf(), pess.getTipo());
-        this.registro = registro;
-        this.pagamento = pagamento;
-    }
-
-    public int getRegistro() {
+    public String getRegistro() {
         return registro;
     }
 
-    public void setRegistro(int registro) {
+    public void setRegistro(String registro) {
         this.registro = registro;
     }
-
-    public float getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(float pagamento) {
-        this.pagamento = pagamento;
-    }
-    
-    
 }

@@ -85,6 +85,7 @@ public class aulaDAO implements genericsDAO<Aula>{
     @Override
     public Aula getByLoginSenha(Aula obj) throws ClassNotFoundException, SQLException {
         //Aulas não precisam de pegar por login
+        return null;
     }
 
     @Override
@@ -123,15 +124,18 @@ public class aulaDAO implements genericsDAO<Aula>{
         if (rs.next()){
             ArrayList<Aula> aulaReturn = new ArrayList<>();
            
-            
             //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
-            Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", 0,0);
+            Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
             
-            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), sql, sql)
+            profDAO proDAO = new profDAO();
             
-            aluReturn.add(alu);
+            profAdd = proDAO.getByLoginSenha(profAdd);
             
-            return aluReturn;
+            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data"));
+            
+            aulaReturn.add(aula);
+            
+            return aulaReturn;
         } else {
             return null;
         }

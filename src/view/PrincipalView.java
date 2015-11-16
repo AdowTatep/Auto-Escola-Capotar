@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import pessoa.Aluno;
 import pessoa.Pessoa;
+import pessoa.Professor;
 import view.atendente.AtendenteView;
 import view.professor.ProfessorView;
 
@@ -137,7 +138,8 @@ public class PrincipalView extends javax.swing.JFrame {
                     }                 
                     break;
                 case "Professor":
-                    ProfessorView profTela = new ProfessorView();
+                    Professor prof = new Professor(usuario, null);
+                    ProfessorView profTela = new ProfessorView(prof);
                     profTela.setVisible(true);
                     this.dispose();
                     break;
