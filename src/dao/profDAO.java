@@ -141,8 +141,7 @@ public class profDAO implements genericsDAO<Professor>{
             sql += "AND nome = '"+obj.getNome()+"' ";
         }   
         if (!obj.getCpf().equals("")) {
-            sql += "AND cpf = '"+obj.getCpf()+"' ";
-            
+            sql += "AND cpf = '"+obj.getCpf()+"' ";            
         }
         if (!obj.getTipo().equals("")) {
             sql += "AND tipo = '"+obj.getTipo()+"' ";

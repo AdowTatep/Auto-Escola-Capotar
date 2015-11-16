@@ -28,6 +28,9 @@ INSERT INTO usuario VALUES
 ('admin', 'admin', '', '', 'Atendente');
 
 INSERT INTO usuario VALUES
+('Prof', 'prof', 'Jõao Luiz', '66689545879', 'Professor');
+
+INSERT INTO usuario VALUES
 ('aluno', 'aluno', 'Aluno', '12345678912', 'Aluno');
 
 CREATE TABLE aulas (

@@ -18,7 +18,7 @@ public class Professor extends Pessoa {
         this.registro = registro;
     }
     
-    public Professor(String registro, String login, String senha, String nome, String cpf, String tipo) {
+    public Professor(String login, String senha, String nome, String cpf, String tipo, String registro) {
         super(login, senha, nome, cpf, tipo);
         this.registro = registro;
     }

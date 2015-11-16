@@ -48,9 +48,8 @@ public class AddAula extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jAulasTab = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jRemoverButt = new javax.swing.JButton();
         jAddAula = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jTipo = new javax.swing.JComboBox();
         jData = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -73,10 +72,7 @@ public class AddAula extends javax.swing.JDialog {
 
         jAulasTab.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Tipo", "Hora Inicio", "Hora Fim", "Data"
@@ -92,11 +88,14 @@ public class AddAula extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jAulasTab);
 
-        jButton2.setText("Remover aula");
+        jRemoverButt.setText("Remover aula");
+        jRemoverButt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRemoverButtActionPerformed(evt);
+            }
+        });
 
         jAddAula.setEnabled(false);
-
-        jLabel2.setText("Adicionar Aula");
 
         jTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Escolha um tipo", "Prática", "Teórica" }));
 
@@ -134,34 +133,27 @@ public class AddAula extends javax.swing.JDialog {
             .addGroup(jAddAulaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
                     .addGroup(jAddAulaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jAddAulaLayout.createSequentialGroup()
-                        .addGroup(jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addGroup(jAddAulaLayout.createSequentialGroup()
-                                .addComponent(jHora, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(jData)
-                            .addComponent(jLabel3)
-                            .addComponent(jAddButt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jModiButt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jHora, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(jData)
+                    .addComponent(jLabel3)
+                    .addComponent(jAddButt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jModiButt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jAddAulaLayout.setVerticalGroup(
             jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jAddAulaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jAddAulaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -193,21 +185,21 @@ public class AddAula extends javax.swing.JDialog {
                         .addComponent(jAddAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-                    .addComponent(jButton2))
+                    .addComponent(jRemoverButt))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(jRemoverButt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jAddAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -305,6 +297,27 @@ public class AddAula extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jModiButtActionPerformed
 
+    private void jRemoverButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoverButtActionPerformed
+        try {
+            //Pega a tabela
+            DefaultTableModel tableAula = (DefaultTableModel) jAulasTab.getModel();
+            
+            //pega a linha selecionada
+            int linhaSelec = jAulasTab.getSelectedRow();
+            
+            //Pega os valores da linha selecionada e coloca eles num objeto aula
+            Aula removerAula = new Aula(0, tableAula.getValueAt(linhaSelec, 1).toString(), profAtual, tableAula.getValueAt(linhaSelec, 2).toString(), tableAula.getValueAt(linhaSelec, 3).toString(), tableAula.getValueAt(linhaSelec, 4).toString());
+            
+            //Usa esse objeto para deletar a aula
+            aulaDAO daoAula = new aulaDAO();
+            daoAula.apagar(removerAula);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+        }
+    }//GEN-LAST:event_jRemoverButtActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -351,17 +364,16 @@ public class AddAula extends javax.swing.JDialog {
     private javax.swing.JPanel jAddAula;
     private javax.swing.JButton jAddButt;
     private javax.swing.JTable jAulasTab;
-    private javax.swing.JButton jButton2;
     private javax.swing.JTextField jData;
     private javax.swing.JTextField jHora;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jMinuto;
     private javax.swing.JButton jModiButt;
+    private javax.swing.JButton jRemoverButt;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox jTipo;
     // End of variables declaration//GEN-END:variables

@@ -6,6 +6,7 @@
 package view;
 
 import dao.alunoDAO;
+import dao.profDAO;
 import view.aluno.AlunoView;
 import dao.usuarioDAO;
 import java.sql.SQLException;
@@ -138,10 +139,17 @@ public class PrincipalView extends javax.swing.JFrame {
                     }                 
                     break;
                 case "Professor":
-                    Professor prof = new Professor(usuario, null);
-                    ProfessorView profTela = new ProfessorView(prof);
-                    profTela.setVisible(true);
-                    this.dispose();
+                    profDAO daoProf = new profDAO();
+                    
+                    if (daoProf.getByLoginSenha(new Professor(usuario, null)) != null) {
+                        Professor prof = new Professor(usuario, null);
+                        ProfessorView profTela = new ProfessorView(prof);
+                        profTela.setVisible(true);
+                        this.dispose();  
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Seu login ainda não foi confirmado!\n"
+                                                            + "Vá até o CFC e converse com os atendentes!");
+                    }
                     break;
                 default:
                     AtendenteView atenTela = new AtendenteView();
