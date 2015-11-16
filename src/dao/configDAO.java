@@ -37,7 +37,7 @@ public class configDAO {
         stm.executeUpdate();
     }
     
-    public Config buscar(Config obj) throws SQLException, ClassNotFoundException {
+    public Config buscar() throws SQLException, ClassNotFoundException {
         Connection c = ConnectionFactory.getConnection();
         
         String sql = "SELECT * FROM config;";

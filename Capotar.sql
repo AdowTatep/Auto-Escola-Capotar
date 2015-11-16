@@ -59,3 +59,9 @@ CREATE TABLE aluno_simulados(
     nota_resultado int(3),
     CONSTRAINT fk_simula_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
+
+CREATE TABLE professor(
+	login VARCHAR(20),
+    registro CHAR(5),    
+    CONSTRAINT fk_prof_usu_login FOREIGN KEY (login) REFERENCES usuario(login)
+);
