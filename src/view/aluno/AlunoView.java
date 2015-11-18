@@ -6,18 +6,20 @@
 package view.aluno;
 
 import javax.swing.JOptionPane;
+import pessoa.Aluno;
 
 /**
  *
  * @author adowt
  */
 public class AlunoView extends javax.swing.JFrame {
-
+    Aluno alunoAtual;
     /**
      * Creates new form aluno
      */
-    public AlunoView() {
+    public AlunoView(Aluno alunoRecebido) {
         initComponents();
+        this.alunoAtual = alunoRecebido;
     }
 
     /**
@@ -31,7 +33,6 @@ public class AlunoView extends javax.swing.JFrame {
 
         javax.swing.JButton jMarcarAula = new javax.swing.JButton();
         jMarcarSimulado = new javax.swing.JButton();
-        jVerAula = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,35 +50,24 @@ public class AlunoView extends javax.swing.JFrame {
             }
         });
 
-        jVerAula.setText("Visualizar aulas");
-        jVerAula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jVerAulaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jVerAula, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jMarcarSimulado, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(jMarcarAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(232, 232, 232)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jVerAula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -85,12 +75,9 @@ public class AlunoView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jVerAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVerAulaActionPerformed
-        JOptionPane.showMessageDialog(this, "Função ainda não implementada!");
-    }//GEN-LAST:event_jVerAulaActionPerformed
-
     private void jMarcarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarAulaActionPerformed
-        JOptionPane.showMessageDialog(this, "Função ainda não implementada!");
+        MarcarAulaView marcarAula = new MarcarAulaView(this, false, alunoAtual);
+        marcarAula.setVisible(true);
     }//GEN-LAST:event_jMarcarAulaActionPerformed
 
     private void jMarcarSimuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarSimuladoActionPerformed
@@ -130,13 +117,12 @@ public class AlunoView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlunoView().setVisible(true);
+                new AlunoView(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jMarcarSimulado;
-    private javax.swing.JButton jVerAula;
     // End of variables declaration//GEN-END:variables
 }

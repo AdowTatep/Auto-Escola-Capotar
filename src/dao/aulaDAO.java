@@ -135,7 +135,9 @@ public class aulaDAO implements genericsDAO<Aula>{
             
             profDAO proDAO = new profDAO();
             
-            profAdd = proDAO.getByLoginSenha(profAdd);
+            if(proDAO.getByLoginSenha(profAdd)!= null) {
+                profAdd = proDAO.getByLoginSenha(profAdd);
+            }
             
             Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"));
             
@@ -144,4 +146,32 @@ public class aulaDAO implements genericsDAO<Aula>{
         return aulaReturn;
     }
     
+    public ArrayList<Aula> procurarTodas() throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM aulas WHERE id_aula IS NOT NULL "; 
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        System.out.println(stm);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Aula> aulaReturn = new ArrayList<>();
+        
+        while(rs.next()){
+            //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
+            Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
+            
+            profDAO proDAO = new profDAO();
+            
+            if(proDAO.getByLoginSenha(profAdd)!= null) {
+                profAdd = proDAO.getByLoginSenha(profAdd);
+            }            
+            
+            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"));
+            
+            aulaReturn.add(aula);
+        }
+        return aulaReturn;
+    }
 }

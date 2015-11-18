@@ -127,11 +127,12 @@ public class PrincipalView extends javax.swing.JFrame {
                 switch (usuario.getTipo()) {
                     case "Aluno":
                         alunoDAO aluDAO = new alunoDAO();
-
+                        Aluno alu = aluDAO.getByLoginSenha(new Aluno(usuario));
+                        
                         //Pesquisa se o aluno já confirmou sua matrícula ou não
-                        if(aluDAO.getByLoginSenha(new Aluno(usuario)) != null) {
+                        if(alu != null) {                            
                             //Se ele já confirmou sua matrícula a tela abre
-                            AlunoView aluTela = new AlunoView();
+                            AlunoView aluTela = new AlunoView(alu);
                             aluTela.setVisible(true);
                             this.dispose();
                         } else {

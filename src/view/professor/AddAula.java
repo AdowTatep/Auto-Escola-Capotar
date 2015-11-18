@@ -249,7 +249,7 @@ public class AddAula extends javax.swing.JDialog {
             String horaInicioAdd, horaFimAdd;
             
             //Se a hora estiver preenchida
-            if(jHora.getText() != "hh" && jMinuto.getText() != "mm") {
+            if(!jHora.getText().equals("hh") && !jMinuto.getText().equals("mm")) {
                 //Preenche
                 horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
                 horaInicioAdd = horaInicio.getHora();
@@ -257,11 +257,7 @@ public class AddAula extends javax.swing.JDialog {
                 horaFim = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));;
                 horaFim.addMinutos(conf.getMinutosAula());
                 horaFimAdd = horaFim.getHora();
-            } else {
-                //Senão, deixa vazia
-                horaInicioAdd = "";
-                horaFimAdd = "";
-            }
+            
             
             //Pega o model da comboBox
             DefaultComboBoxModel combModel = (DefaultComboBoxModel) jTipo.getModel();
@@ -281,6 +277,9 @@ public class AddAula extends javax.swing.JDialog {
             
             refreshTabAula();
             } else {
+                JOptionPane.showMessageDialog(this, "Digite uma hora!");
+            }
+            } else {
                 JOptionPane.showMessageDialog(this, "Escolha uma aula!");
             }
         } catch (ClassNotFoundException ex) {
@@ -299,7 +298,7 @@ public class AddAula extends javax.swing.JDialog {
             String horaInicioAdd, horaFimAdd;
             
             //Se a hora estiver preenchida
-            if(jHora.getText() != "hh" && jMinuto.getText() != "mm") {
+            if(!jHora.getText().equals("hh") && !jMinuto.getText().equals("mm")) {
                 //Preenche
                 horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
                 horaInicioAdd = horaInicio.getHora();
