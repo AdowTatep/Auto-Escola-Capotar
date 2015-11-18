@@ -7,6 +7,7 @@ package view.aluno;
 
 import aula.Aula;
 import dao.alunoAulaDAO;
+import dao.alunoDAO;
 import dao.aulaDAO;
 import dao.configDAO;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import negocio.Config;
+import negocio.Matricula;
 import pessoa.Aluno;
 import pessoa.Professor;
 
@@ -139,9 +141,9 @@ public class MarcarAulaView extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel6)
-                                    .addGap(2, 2, 2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jTempoAula)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel8))
                                 .addComponent(jLabel1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -224,6 +226,12 @@ public class MarcarAulaView extends javax.swing.JDialog {
                 alunoAulaDAO aluAulaDAO = new alunoAulaDAO();
                 
                 aluAulaDAO.inserir(aulaSelec, aluAtual);
+                Matricula matNova = new Matricula(aluAtual.getMatricula().getNumero(), aluAtual.getMatricula().getSaldo());
+                
+                Config conf = new configDAO().buscar();
+                matNova.setSaldo(matNova.getSaldo()-conf.getPrecoAula());
+                aluAtual.setMatricula(matNova);
+                new alunoDAO().alterar(aluAtual, aluAtual);
                 
                 refreshAulas();
            

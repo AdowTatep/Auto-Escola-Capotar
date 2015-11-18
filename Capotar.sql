@@ -57,9 +57,11 @@ CREATE TABLE aluno_matricula (
 );
 
 CREATE TABLE aluno_simulados(
+	id_simulado int(10) primary key auto_increment not null,
 	login VARCHAR(20),
     data_simulado VARCHAR(20),
     nota_resultado int(3),
+    preco_simulado float(8,2),
     CONSTRAINT fk_simula_aluno_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
 

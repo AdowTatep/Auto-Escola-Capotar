@@ -33,20 +33,28 @@ public class AlunoView extends javax.swing.JFrame {
 
         javax.swing.JButton jMarcarAula = new javax.swing.JButton();
         jMarcarSimulado = new javax.swing.JButton();
+        javax.swing.JButton jMarcarAula1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMarcarAula.setText("Marcar aula");
+        jMarcarAula.setText("Visualizar aulas");
         jMarcarAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMarcarAulaActionPerformed(evt);
             }
         });
 
-        jMarcarSimulado.setText("Marcar simulado");
+        jMarcarSimulado.setText("Visualizar Simulados");
         jMarcarSimulado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMarcarSimuladoActionPerformed(evt);
+            }
+        });
+
+        jMarcarAula1.setText("Visualizar Faltas");
+        jMarcarAula1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMarcarAula1ActionPerformed(evt);
             }
         });
 
@@ -55,20 +63,24 @@ public class AlunoView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jMarcarAula1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(232, 232, 232)
+                .addGap(180, 180, 180)
+                .addComponent(jMarcarAula1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -81,8 +93,13 @@ public class AlunoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMarcarAulaActionPerformed
 
     private void jMarcarSimuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarSimuladoActionPerformed
-        JOptionPane.showMessageDialog(this, "Função ainda não implementada!");
+        SimuladoAlunoView simuView = new SimuladoAlunoView(this, true, alunoAtual);
+        simuView.setVisible(true);
     }//GEN-LAST:event_jMarcarSimuladoActionPerformed
+
+    private void jMarcarAula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarAula1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMarcarAula1ActionPerformed
 
     /**
      * @param args the command line arguments

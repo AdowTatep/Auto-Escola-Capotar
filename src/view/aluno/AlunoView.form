@@ -24,23 +24,28 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="jMarcarSimulado" min="-2" pref="170" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jMarcarAula" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jMarcarAula1" min="-2" pref="170" max="-2" attributes="0"/>
+                  <Component id="jMarcarAula" min="-2" pref="170" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="232" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
+              <Component id="jMarcarAula1" min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jMarcarAula" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jMarcarSimulado" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,7 +53,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jMarcarAula">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Marcar aula"/>
+        <Property name="text" type="java.lang.String" value="Visualizar aulas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMarcarAulaActionPerformed"/>
@@ -60,11 +65,23 @@
     </Component>
     <Component class="javax.swing.JButton" name="jMarcarSimulado">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Marcar simulado"/>
+        <Property name="text" type="java.lang.String" value="Visualizar Simulados"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMarcarSimuladoActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jMarcarAula1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Visualizar Faltas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMarcarAula1ActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

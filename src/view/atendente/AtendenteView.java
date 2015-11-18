@@ -65,7 +65,7 @@ public class AtendenteView extends javax.swing.JFrame {
             }
         });
 
-        jFuncionarios.setText("Gerenciar Funcionários");
+        jFuncionarios.setText("Gerenciar Professores");
         jFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFuncionariosActionPerformed(evt);

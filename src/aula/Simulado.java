@@ -10,15 +10,24 @@ package aula;
  * @author adowt
  */
 public class Simulado {
-    public String data;
-    public int resultado;
+    private int id;
+    private String data;
+    private int resultado;
+    private float preco;
 
-    public Simulado() {
-    }
-
-    public Simulado(String data, int resultado) {
+    public Simulado(int id, String data, int resultado, float preco) {
+        this.id = id;
         this.data = data;
         this.resultado = resultado;
+        this.preco = preco;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getData() {
@@ -36,4 +45,14 @@ public class Simulado {
     public void setResultado(int resultado) {
         this.resultado = resultado;
     }
+
+    public float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }
+
+    
 }
