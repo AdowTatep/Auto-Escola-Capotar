@@ -23,8 +23,8 @@ public class veiculoDAO implements genericsDAO<Veiculo>{
         
     }
 
-    @Override
-    public void alterar(Veiculo obj) throws SQLException, ClassNotFoundException {
+    
+    public void alterar(Veiculo obj, Veiculo mod) throws SQLException, ClassNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -25,6 +25,7 @@ import pessoa.Professor;
  */
 public class AddAula extends javax.swing.JDialog {
     private Professor profAtual;
+    ArrayList<Aula> listAulas;
     /**
      * Creates new form AddAula
      */
@@ -48,7 +49,7 @@ public class AddAula extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jAulasTab = new javax.swing.JTable();
-        jRemoverButt = new javax.swing.JButton();
+        jRemoverAula = new javax.swing.JButton();
         jAddAula = new javax.swing.JPanel();
         jTipo = new javax.swing.JComboBox();
         jData = new javax.swing.JTextField();
@@ -75,11 +76,11 @@ public class AddAula extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Tipo", "Hora Inicio", "Hora Fim", "Data"
+                "ID", "Tipo", "Hora Inicio", "Hora Fim", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -88,10 +89,10 @@ public class AddAula extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jAulasTab);
 
-        jRemoverButt.setText("Remover aula");
-        jRemoverButt.addActionListener(new java.awt.event.ActionListener() {
+        jRemoverAula.setText("Remover aula");
+        jRemoverAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRemoverButtActionPerformed(evt);
+                jRemoverAulaActionPerformed(evt);
             }
         });
 
@@ -185,7 +186,7 @@ public class AddAula extends javax.swing.JDialog {
                         .addComponent(jAddAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-                    .addComponent(jRemoverButt))
+                    .addComponent(jRemoverAula))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -196,7 +197,7 @@ public class AddAula extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRemoverButt)
+                .addComponent(jRemoverAula)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jAddAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
@@ -206,49 +207,71 @@ public class AddAula extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    
+    private void refreshTabAula(){
         try {
             aulaDAO daoAula = new aulaDAO();
             
             //Procura as aulas e preenche uma lista com elas
             Aula aulaProc = new Aula(0, "", profAtual, "", "", "");
-            ArrayList<Aula> listAulas = daoAula.procurar(aulaProc);
+            
+            listAulas = daoAula.procurar(aulaProc);
             
             //Pega o model da tabela
             DefaultTableModel tabAulas = (DefaultTableModel) jAulasTab.getModel();
             
+            while(tabAulas.getRowCount()!=0){
+                tabAulas.removeRow(0);
+            }
+            
             //Preenche a tabela com esse model
             for(Aula aulaAdd:listAulas) {
-                tabAulas.addRow(new Object[]{aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData()});
+                tabAulas.addRow(new Object[]{aulaAdd.getId(), aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData()});
             }
             
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
+    }
+    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        refreshTabAula();
     }//GEN-LAST:event_formWindowOpened
 
     private void jAddButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddButtActionPerformed
-        
         try {
             Config conf = new configDAO().buscar();
             
             //Cria a hora de inicio
-            Hora horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
+            Hora horaInicio,horaFim;
+            String horaInicioAdd, horaFimAdd;
             
-            //Copia a hora de inicio e adiciona os minutos correspondentes ao que está configurado
-            Hora horaFim = horaInicio;
-            horaFim.addMinutos(conf.getMinutosAula());
+            //Se a hora estiver preenchida
+            if(jHora.getText() != "hh" && jMinuto.getText() != "mm") {
+                //Preenche
+                horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
+                horaInicioAdd = horaInicio.getHora();
+                //Copia a hora de inicio e adiciona os minutos correspondentes ao que está configurado
+                horaFim = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));;
+                horaFim.addMinutos(conf.getMinutosAula());
+                horaFimAdd = horaFim.getHora();
+            } else {
+                //Senão, deixa vazia
+                horaInicioAdd = "";
+                horaFimAdd = "";
+            }
             
             //Pega o model da comboBox
             DefaultComboBoxModel combModel = (DefaultComboBoxModel) jTipo.getModel();
             
             //Pega o tipo selecionado no model
             String tipo = (String) combModel.getSelectedItem();
+            if(tipo == "Prática" || tipo == "Teórica") {
             
             //Cria uma aula com os valores
-            Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicio.getHora(), horaFim.getHora(), jData.getText());
+            Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText());
             
             //Cria o dao da aula para ser usado
             aulaDAO daoAula = new aulaDAO();
@@ -256,11 +279,14 @@ public class AddAula extends javax.swing.JDialog {
             //Insere a aula preenchida
             daoAula.inserir(aulaAdd);
             
-            
+            refreshTabAula();
+            } else {
+                JOptionPane.showMessageDialog(this, "Escolha uma aula!");
+            }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
     }//GEN-LAST:event_jAddButtActionPerformed
 
@@ -269,35 +295,58 @@ public class AddAula extends javax.swing.JDialog {
             Config conf = new configDAO().buscar();
             
             //Cria a hora de inicio
-            Hora horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
+            Hora horaInicio,horaFim;
+            String horaInicioAdd, horaFimAdd;
             
-            //Copia a hora de inicio e adiciona os minutos correspondentes ao que está configurado
-            Hora horaFim = horaInicio;
-            horaFim.addMinutos(conf.getMinutosAula());
+            //Se a hora estiver preenchida
+            if(jHora.getText() != "hh" && jMinuto.getText() != "mm") {
+                //Preenche
+                horaInicio = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));
+                horaInicioAdd = horaInicio.getHora();
+                //Copia a hora de inicio e adiciona os minutos correspondentes ao que está configurado
+                horaFim = new Hora(Integer.parseInt(jHora.getText()), Integer.parseInt(jMinuto.getText()));;
+                horaFim.addMinutos(conf.getMinutosAula());
+                horaFimAdd = horaFim.getHora();
+            } else {
+                //Senão, deixa vazia
+                horaInicioAdd = "";
+                horaFimAdd = "";
+            }
             
             //Pega o model da comboBox
             DefaultComboBoxModel combModel = (DefaultComboBoxModel) jTipo.getModel();
             
-            //Pega o tipo selecionado no model
+             //Pega o tipo selecionado no model
             String tipo = (String) combModel.getSelectedItem();
-            
-            //Cria uma aula com os valores
-            Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicio.getHora(), horaFim.getHora(), jData.getText());
-            
-            //Cria o dao da aula para ser usado
-            aulaDAO daoAula = new aulaDAO();
-            
-            //Altera com a aula preenchida
-            daoAula.alterar(aulaAdd);
-            
+            if(tipo == "Prática" || tipo == "Teórica") {
+                //Pega a tabela
+                DefaultTableModel tableAula = (DefaultTableModel) jAulasTab.getModel();
+
+                //pega a linha selecionada
+                int linhaSelec = jAulasTab.getSelectedRow();
+
+                //Pega os valores da linha selecionada e coloca eles num objeto aula
+                Aula modAula = listAulas.get(linhaSelec);                
+                Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText());
+                
+                //Cria o dao da aula para ser usado
+                aulaDAO daoAula = new aulaDAO();
+
+                //Insere a aula preenchida
+                daoAula.alterar(aulaAdd, modAula);
+
+                refreshTabAula();
+            } else {
+                JOptionPane.showMessageDialog(this, "Escolha uma aula!");
+            }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
     }//GEN-LAST:event_jModiButtActionPerformed
 
-    private void jRemoverButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoverButtActionPerformed
+    private void jRemoverAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoverAulaActionPerformed
         try {
             //Pega a tabela
             DefaultTableModel tableAula = (DefaultTableModel) jAulasTab.getModel();
@@ -306,17 +355,19 @@ public class AddAula extends javax.swing.JDialog {
             int linhaSelec = jAulasTab.getSelectedRow();
             
             //Pega os valores da linha selecionada e coloca eles num objeto aula
-            Aula removerAula = new Aula(0, tableAula.getValueAt(linhaSelec, 1).toString(), profAtual, tableAula.getValueAt(linhaSelec, 2).toString(), tableAula.getValueAt(linhaSelec, 3).toString(), tableAula.getValueAt(linhaSelec, 4).toString());
+            Aula removerAula = listAulas.get(linhaSelec);
             
             //Usa esse objeto para deletar a aula
             aulaDAO daoAula = new aulaDAO();
             daoAula.apagar(removerAula);
+            
+            refreshTabAula();
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro no banco!/n"+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
-    }//GEN-LAST:event_jRemoverButtActionPerformed
+    }//GEN-LAST:event_jRemoverAulaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -373,7 +424,7 @@ public class AddAula extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jMinuto;
     private javax.swing.JButton jModiButt;
-    private javax.swing.JButton jRemoverButt;
+    private javax.swing.JButton jRemoverAula;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox jTipo;
     // End of variables declaration//GEN-END:variables

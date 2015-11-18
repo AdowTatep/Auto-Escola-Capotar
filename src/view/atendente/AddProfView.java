@@ -284,7 +284,7 @@ public class AddProfView extends javax.swing.JDialog {
             //modificar
             if(daoProf.getByLoginSenha(prof)!=null){
                 //Altera passando o novo registro
-                daoProf.alterar(prof);
+                daoProf.alterar(prof,prof);
             }else{
                 //Senão existir ele insere um novo
                 daoProf.inserir(prof);

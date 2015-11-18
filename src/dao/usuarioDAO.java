@@ -36,8 +36,8 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         stm.executeUpdate();
     }
 
-    @Override
-    public void alterar(Pessoa obj) throws SQLException, ClassNotFoundException {
+    
+    public void alterar(Pessoa obj, Pessoa mod) throws SQLException, ClassNotFoundException {
         Connection c = ConnectionFactory.getConnection();
         
         String sql = "UPDATE usuario SET "
@@ -52,7 +52,7 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         stm.setString(2, obj.getSenha());
         stm.setString(3, obj.getNome());
         stm.setString(4, obj.getTipo());
-        stm.setString(5, obj.getLogin());
+        stm.setString(5, mod.getLogin());
         
         //Imprime o statement no console
         System.out.println(stm);

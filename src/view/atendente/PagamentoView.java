@@ -330,7 +330,7 @@ public class PagamentoView extends javax.swing.JDialog {
                 //já existente
                 alu.getMatricula().setSaldo(alu.getMatricula().getSaldo() + saldoNovo);
                 //Altera passando o novo saldo
-                aluDAO.alterar(alu);
+                aluDAO.alterar(alu,alu);
             }else{
                 //Senão existir ele insere um novo                
                 aluDAO.inserir(alu);

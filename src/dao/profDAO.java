@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import pessoa.Pessoa;
 import pessoa.Professor;
 
 /**
@@ -58,8 +59,8 @@ public class profDAO implements genericsDAO<Professor>{
         }
     }
 
-    @Override
-    public void alterar(Professor obj) throws SQLException, ClassNotFoundException {
+    
+    public void alterar(Professor obj, Pessoa mod) throws SQLException, ClassNotFoundException {
         Connection c = ConnectionFactory.getConnection();
         
         //Todos os professores tem que ter um login então
@@ -67,7 +68,7 @@ public class profDAO implements genericsDAO<Professor>{
         //será alterado na tabela usuario tambem
         usuarioDAO usuDAO = new usuarioDAO();
         
-        usuDAO.alterar(obj);
+        usuDAO.alterar(obj, mod);
         
         String sql = "UPDATE professor SET "
                 + "login = ?, "
@@ -78,7 +79,7 @@ public class profDAO implements genericsDAO<Professor>{
         
         stm.setString(1, obj.getLogin());
         stm.setString(2, obj.getRegistro());
-        stm.setString(3, obj.getLogin());
+        stm.setString(3, mod.getLogin());
         
         //Imprime o statement no console
         System.out.println(stm);

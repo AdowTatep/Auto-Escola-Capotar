@@ -40,14 +40,14 @@ public class Hora {
                 //Se hora passar de 24, ela zera, pois ja é outro dia
                 hora = 00;
             }
-            //Guardamos o minuto para calcular o tempo excedido
-            minAdd = minuto;
-            
             //Zeramos o minuto
             minuto = 00;
             
+            //Guardamos o minuto para calcular o tempo excedido
+            minAdd -= 60;
+            
             //Adicionamos o tempo excedido
-            minuto += valor-minAdd;
+            minuto += minAdd;
         } else {
             minuto = minAdd;
         }

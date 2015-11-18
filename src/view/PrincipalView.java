@@ -120,43 +120,47 @@ public class PrincipalView extends javax.swing.JFrame {
         try {
             usuarioDAO usuConnec = new usuarioDAO();
             Pessoa usuario = new Pessoa(jLogin.getText(), jSenha.getText(), "", "", "");
-            usuario = usuConnec.getByLoginSenha(usuario);
-            
-            //Pega o tipo de usuário e abre uma tela correspondente
-            switch (usuario.getTipo()) {
-                case "Aluno":
-                    alunoDAO aluDAO = new alunoDAO();
-                    
-                    //Pesquisa se o aluno já confirmou sua matrícula ou não
-                    if(aluDAO.getByLoginSenha(new Aluno(usuario)) != null) {
-                        //Se ele já confirmou sua matrícula a tela abre
-                        AlunoView aluTela = new AlunoView();
-                        aluTela.setVisible(true);
+            if (usuConnec.getByLoginSenha(usuario)!=null){                
+                usuario = usuConnec.getByLoginSenha(usuario);
+
+                //Pega o tipo de usuário e abre uma tela correspondente
+                switch (usuario.getTipo()) {
+                    case "Aluno":
+                        alunoDAO aluDAO = new alunoDAO();
+
+                        //Pesquisa se o aluno já confirmou sua matrícula ou não
+                        if(aluDAO.getByLoginSenha(new Aluno(usuario)) != null) {
+                            //Se ele já confirmou sua matrícula a tela abre
+                            AlunoView aluTela = new AlunoView();
+                            aluTela.setVisible(true);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Você precisa confirmar sua matrícula!\n"
+                                                                + "Vá até o CFC e insira um saldo com os atendentes!");
+                        }                 
+                        break;
+                    case "Professor":
+                        profDAO daoProf = new profDAO();
+
+                        if (daoProf.getByLoginSenha(new Professor(usuario, null)) != null) {
+                            Professor prof = new Professor(usuario, null);
+                            ProfessorView profTela = new ProfessorView(prof);
+                            profTela.setVisible(true);
+                            this.dispose();  
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Seu login ainda não foi confirmado!\n"
+                                                                + "Vá até o CFC e converse com os atendentes!");
+                        }
+                        break;
+                    default:
+                        AtendenteView atenTela = new AtendenteView();
+                        atenTela.setVisible(true);
                         this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Você precisa confirmar sua matrícula!\n"
-                                                            + "Vá até o CFC e insira um saldo com os atendentes!");
-                    }                 
-                    break;
-                case "Professor":
-                    profDAO daoProf = new profDAO();
-                    
-                    if (daoProf.getByLoginSenha(new Professor(usuario, null)) != null) {
-                        Professor prof = new Professor(usuario, null);
-                        ProfessorView profTela = new ProfessorView(prof);
-                        profTela.setVisible(true);
-                        this.dispose();  
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Seu login ainda não foi confirmado!\n"
-                                                            + "Vá até o CFC e converse com os atendentes!");
-                    }
-                    break;
-                default:
-                    AtendenteView atenTela = new AtendenteView();
-                    atenTela.setVisible(true);
-                    this.dispose();
-                    break;
-            }
+                        break;
+                }
+                } else {
+                         JOptionPane.showMessageDialog(this, "Login ou senha incorretos!");            
+                }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na aplicação!\nContate o desenvolvedor!");
         } catch (SQLException ex) {
