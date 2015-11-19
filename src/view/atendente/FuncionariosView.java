@@ -209,7 +209,11 @@ public class FuncionariosView extends javax.swing.JDialog {
                 
                 //Pega o model da combo e bota em uma variável para fácil uso
                 DefaultTableModel funcTab = (DefaultTableModel) jFuncTable.getModel();
-
+                
+                while(funcTab.getRowCount()!=0){
+                    funcTab.removeRow(0);
+                }
+                
                 //Remove os elementos dentro da combo box
                 for (Professor profAdd:listaFunc) {
                     funcTab.addRow(new Object[]{profAdd.getLogin(), profAdd.getNome(), profAdd.getCpf(), profAdd.getTipo(), profAdd.getRegistro()});

@@ -139,7 +139,7 @@ public class aulaDAO implements genericsDAO<Aula>{
                 profAdd = proDAO.getByLoginSenha(profAdd);
             }
             
-            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"));
+            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"), false);
             
             aulaReturn.add(aula);
         }
@@ -168,7 +168,7 @@ public class aulaDAO implements genericsDAO<Aula>{
                 profAdd = proDAO.getByLoginSenha(profAdd);
             }            
             
-            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"));
+            Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"), false);
             
             aulaReturn.add(aula);
         }

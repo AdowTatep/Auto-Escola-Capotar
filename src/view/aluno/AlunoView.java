@@ -33,9 +33,15 @@ public class AlunoView extends javax.swing.JFrame {
 
         javax.swing.JButton jMarcarAula = new javax.swing.JButton();
         jMarcarSimulado = new javax.swing.JButton();
-        javax.swing.JButton jMarcarAula1 = new javax.swing.JButton();
+        jAlunoNome = new javax.swing.JLabel();
+        jSaldo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jMarcarAula.setText("Visualizar aulas");
         jMarcarAula.addActionListener(new java.awt.event.ActionListener() {
@@ -51,12 +57,13 @@ public class AlunoView extends javax.swing.JFrame {
             }
         });
 
-        jMarcarAula1.setText("Visualizar Faltas");
-        jMarcarAula1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMarcarAula1ActionPerformed(evt);
-            }
-        });
+        jAlunoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jAlunoNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/aluno-icon.png"))); // NOI18N
+        jAlunoNome.setText("Nome");
+
+        jSaldo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jSaldo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/saldo-icon.png"))); // NOI18N
+        jSaldo.setText("Saldo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,23 +71,27 @@ public class AlunoView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jMarcarAula1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jAlunoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(jMarcarAula1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
+                .addComponent(jAlunoNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSaldo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jMarcarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jMarcarSimulado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -97,9 +108,10 @@ public class AlunoView extends javax.swing.JFrame {
         simuView.setVisible(true);
     }//GEN-LAST:event_jMarcarSimuladoActionPerformed
 
-    private void jMarcarAula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarAula1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMarcarAula1ActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jAlunoNome.setText(alunoAtual.getNome());
+        jSaldo.setText("R$ "+alunoAtual.getMatricula().getSaldo());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -140,6 +152,8 @@ public class AlunoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jAlunoNome;
     private javax.swing.JButton jMarcarSimulado;
+    private javax.swing.JLabel jSaldo;
     // End of variables declaration//GEN-END:variables
 }

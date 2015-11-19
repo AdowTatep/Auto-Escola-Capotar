@@ -60,6 +60,14 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
         jSimData = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jMarcarSim = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jPrecoAula = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jSaldoAluno = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jSaldoFinal = new javax.swing.JLabel();
         jRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -103,6 +111,22 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
             }
         });
 
+        jLabel7.setText("Será cobrado R$");
+
+        jPrecoAula.setText("300");
+
+        jLabel10.setText("Você tem R$");
+
+        jSaldoAluno.setText("1200");
+
+        jLabel12.setText("em saldo");
+
+        jLabel13.setText("pelo simulado");
+
+        jLabel14.setText("Você irá ficar com R$");
+
+        jSaldoFinal.setText("900");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -113,7 +137,25 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(jSimData, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPrecoAula)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSaldoAluno)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSaldoFinal)))
+                .addGap(28, 28, 28))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jMarcarSim)
@@ -123,14 +165,31 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSimData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jMarcarSim)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSimData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(jMarcarSim)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jSaldoAluno)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jPrecoAula)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jSaldoFinal))
+                        .addGap(54, 54, 54))))
         );
 
         jRemover.setText("Remover");
@@ -190,7 +249,13 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
                     tabSim.addRow(new Object[]{simuAdd.getId(), simuAdd.getData(), "Ainda não avaliado"});
                 }
             }
+            Config conf = new configDAO().buscar();
+            //Seta os valores
             
+            jSaldoAluno.setText(Float.toString(alunoAtual.getMatricula().getSaldo()));
+            jPrecoAula.setText(Float.toString(conf.getPrecoSimulado()));
+            float saldoFinal = alunoAtual.getMatricula().getSaldo() - conf.getPrecoSimulado();
+            jSaldoFinal.setText(Float.toString(saldoFinal));
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
@@ -199,23 +264,50 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        refreshTable();
+        
+        refreshTable();          
+        
     }//GEN-LAST:event_formWindowOpened
+
+    private void jRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoverActionPerformed
+        try {
+            int linhSelec = jSimuTable.getSelectedRow();
+            
+            Simulado simRemov = simuList.get(linhSelec);
+            
+            Matricula matNova = new Matricula(alunoAtual.getMatricula().getNumero(), alunoAtual.getMatricula().getSaldo());                
+            matNova.setSaldo(matNova.getSaldo()-conf.getPrecoAula());
+            alunoAtual.setMatricula(matNova);
+            new alunoDAO().alterar(alunoAtual, alunoAtual);
+            
+            if(simRemov.getResultado() > -1){
+                new simuladoDAO().apagar(simRemov, alunoAtual);
+                refreshTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Não é possível remover simulados já realizados!");
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
+        }
+    }//GEN-LAST:event_jRemoverActionPerformed
 
     private void jMarcarSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarSimActionPerformed
         try {
             if(jSimData.getText() != ""){
                 Simulado simuAdd = new Simulado(0, jSimData.getText(), -1, conf.getPrecoSimulado());
-            
+
                 new simuladoDAO().inserir(simuAdd, alunoAtual);
 
-                Matricula matNova = new Matricula(alunoAtual.getMatricula().getNumero(), alunoAtual.getMatricula().getSaldo());                
-                
+                Matricula matNova = new Matricula(alunoAtual.getMatricula().getNumero(), alunoAtual.getMatricula().getSaldo());
+
                 matNova.setSaldo(matNova.getSaldo()-conf.getPrecoAula());
                 alunoAtual.setMatricula(matNova);
                 new alunoDAO().alterar(alunoAtual, alunoAtual);
-               
-                JOptionPane.showMessageDialog(this, "Simulado adicionado com sucesso!"); 
+
+                JOptionPane.showMessageDialog(this, "Simulado adicionado com sucesso!");
                 refreshTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Digite uma data!");
@@ -225,27 +317,8 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
         }
-        
-    }//GEN-LAST:event_jMarcarSimActionPerformed
 
-    private void jRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoverActionPerformed
-        try {
-            int linhSelec = jSimuTable.getSelectedRow();
-            
-            Simulado simRemov = simuList.get(linhSelec);
-            
-            if(simRemov.getResultado() > -1){
-                new simuladoDAO().apagar(simRemov, alunoAtual);
-                refreshTable();
-            } else {
-                JOptionPane.showMessageDialog(this, "Não é possível remover simulados já realizados!");
-            }
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "Erro na conexão!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
-        }
-    }//GEN-LAST:event_jRemoverActionPerformed
+    }//GEN-LAST:event_jMarcarSimActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,11 +364,19 @@ public class SimuladoAlunoView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jMarcarSim;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jPrecoAula;
     private javax.swing.JButton jRemover;
+    private javax.swing.JLabel jSaldoAluno;
+    private javax.swing.JLabel jSaldoFinal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jSimData;
     private javax.swing.JTable jSimuTable;

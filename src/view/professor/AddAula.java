@@ -200,7 +200,7 @@ public class AddAula extends javax.swing.JDialog {
                 .addComponent(jRemoverAula)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jAddAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addContainerGap())
         );
 
         pack();
@@ -213,7 +213,7 @@ public class AddAula extends javax.swing.JDialog {
             aulaDAO daoAula = new aulaDAO();
             
             //Procura as aulas e preenche uma lista com elas
-            Aula aulaProc = new Aula(0, "", profAtual, "", "", "");
+            Aula aulaProc = new Aula(0, "", profAtual, "", "", "", false);
             
             listAulas = daoAula.procurar(aulaProc);
             
@@ -267,7 +267,7 @@ public class AddAula extends javax.swing.JDialog {
             if(tipo == "Prática" || tipo == "Teórica") {
             
             //Cria uma aula com os valores
-            Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText());
+            Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText(), false);
             
             //Cria o dao da aula para ser usado
             aulaDAO daoAula = new aulaDAO();
@@ -326,7 +326,7 @@ public class AddAula extends javax.swing.JDialog {
 
                 //Pega os valores da linha selecionada e coloca eles num objeto aula
                 Aula modAula = listAulas.get(linhaSelec);                
-                Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText());
+                Aula aulaAdd = new Aula(0, tipo, profAtual, horaInicioAdd, horaFimAdd, jData.getText(), false);
                 
                 //Cria o dao da aula para ser usado
                 aulaDAO daoAula = new aulaDAO();

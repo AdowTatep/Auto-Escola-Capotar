@@ -57,6 +57,24 @@ public class simuladoDAO {
         stm.executeUpdate();
     }
     
+    public void alterar(Simulado obj) throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "UPDATE aluno_simulados SET "
+                + "data_simulado = ?, "
+                + "nota_resultado = ? "
+                + "WHERE  id_simulado = ?";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        stm.setString(1, obj.getData());
+        stm.setInt(2, obj.getResultado());
+        stm.setInt(3, obj.getId());
+        
+        System.out.println(stm);
+        stm.executeUpdate();
+    }
+    
     public void apagar(Simulado obj, Aluno alu) throws ClassNotFoundException, SQLException {
         Connection c = ConnectionFactory.getConnection();
         
@@ -101,4 +119,21 @@ public class simuladoDAO {
         return simuList;
     }    
     
+    public ArrayList<Simulado> procurarTodos() throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM aluno_simulados WHERE login IS NOT NULL  ";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        System.out.println(stm);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Simulado> simuList = new ArrayList<>();
+        while(rs.next()){
+            Simulado simuAdd = new Simulado(rs.getInt("id_simulado"), rs.getString("data_simulado"), rs.getInt("nota_resultado"), rs.getInt("preco_simulado"));
+            simuList.add(simuAdd);
+        }
+        return simuList;
+    }    
 }

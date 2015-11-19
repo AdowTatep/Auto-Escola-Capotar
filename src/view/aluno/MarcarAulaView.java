@@ -107,7 +107,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
 
         jSaldoAluno.setText("1200");
 
-        jLabel12.setText("em caixa");
+        jLabel12.setText("em saldo");
 
         jLabel13.setText("pela aula");
 
@@ -120,7 +120,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Tipo", "Hora Início", "Hora Fim", "Data", "Professor"
+                "ID", "Tipo", "Hora Início", "Hora Fim", "Data", "Professor", "Faltou"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -133,47 +133,46 @@ public class MarcarAulaView extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboAula, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(20, 20, 20)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTempoAula)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel8))
-                                .addComponent(jLabel1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jLabel7)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jPrecoAula)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel13))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jLabel10)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jSaldoAluno)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel12))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jLabel14)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jSaldoFinal)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jMarcarButt))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(241, 241, 241)
-                            .addComponent(jLabel16)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel2))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTempoAula)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jPrecoAula)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel13))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jSaldoAluno)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel12))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel14)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jSaldoFinal)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jMarcarButt))
+                                .addComponent(jComboAula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(303, 303, 303)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +195,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jTempoAula)
                     .addComponent(jLabel8))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jSaldoAluno)
@@ -250,7 +249,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
             alunoAulaDAO aulaDAO = new alunoAulaDAO();
             
             Professor profProcurar = new Professor("", "", "", "", "", "");
-            Aula aulaProcurar = new Aula(0, "", profProcurar, "", "", "");
+            Aula aulaProcurar = new Aula(0, "", profProcurar, "", "", "", false);
             
             listAula = aulaDAO.procurar(aulaProcurar, aluAtual);
             
@@ -261,7 +260,13 @@ public class MarcarAulaView extends javax.swing.JDialog {
             }
             
             for(Aula aulaAdd:listAula){
-                aulasTab.addRow(new Object[]{aulaAdd.getId(), aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData(), aulaAdd.getProf().getNome()});
+                String falt;
+                if(aulaAdd.isFaltou()){
+                    falt = "Sim";
+                } else {
+                    falt = "Não";
+                }
+                aulasTab.addRow(new Object[]{aulaAdd.getId(), aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData(), aulaAdd.getProf().getNome(), falt});
             }
             
             aulasDisp = new aulaDAO().procurarTodas();
@@ -271,6 +276,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
             
                 dispCombo.removeAllElements();
                 dispCombo.addElement("Selecione uma aula!");
+                
                 for(Aula aulaAdd:aulasDisp){
                     String textoAula = aulaAdd.getTipo()+" | "+aulaAdd.getProf().getNome()+" | "+aulaAdd.getHoraInicio()+" Horas. Dia: "+aulaAdd.getData();
                     dispCombo.addElement(textoAula);

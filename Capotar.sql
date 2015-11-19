@@ -46,6 +46,7 @@ CREATE TABLE aulas (
 CREATE TABLE aulas_aluno (
 	id_aula int(10),
     login VARCHAR(20),
+    faltou_aula tinyint(1) DEFAULT 0,
     CONSTRAINT fk_aula_aluno FOREIGN KEY (id_aula) REFERENCES aulas(id_aula)
 );
 

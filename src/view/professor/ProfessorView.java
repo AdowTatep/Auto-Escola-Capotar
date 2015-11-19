@@ -37,9 +37,11 @@ public class ProfessorView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jAddAula = new javax.swing.JButton();
+        jAppFaltas = new javax.swing.JButton();
+        jAvalSim = new javax.swing.JButton();
+        jProfNome = new javax.swing.JLabel();
+        jRegistro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -48,47 +50,70 @@ public class ProfessorView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Adicionar aula");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jAddAula.setText("Adicionar aula");
+        jAddAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jAddAulaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Aplicar faltas");
-
-        jButton3.setText("Avaliar Simulados");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jAppFaltas.setText("Aplicar faltas");
+        jAppFaltas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jAppFaltasActionPerformed(evt);
             }
         });
+
+        jAvalSim.setText("Avaliar Simulados");
+        jAvalSim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAvalSimActionPerformed(evt);
+            }
+        });
+
+        jProfNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jProfNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/aluno-icon.png"))); // NOI18N
+        jProfNome.setText("Nome");
+
+        jRegistro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/registro-icon.png"))); // NOI18N
+        jRegistro.setText("Registro");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jAppFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jAddAula, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(192, 192, 192)
+                            .addComponent(jAvalSim, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jProfNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRegistro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jAvalSim, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jAppFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jAddAula, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -96,17 +121,20 @@ public class ProfessorView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jAddAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddAulaActionPerformed
         AddAula addAula = new AddAula(this, true, profAtual);
         
         addAula.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jAddAulaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             //Quando a janela é criada, preenche o profAtual com o registro correto pois ele vem com null da principalView
             profDAO daoProf = new profDAO();
             profAtual = daoProf.getByLoginSenha(profAtual);
+            
+            jProfNome.setText(profAtual.getNome());
+            jRegistro.setText(profAtual.getRegistro());
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Não foi possível pegar o seu login atual/nErro na conexão!");
         } catch (SQLException ex) {
@@ -114,9 +142,15 @@ public class ProfessorView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jAvalSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAvalSimActionPerformed
+        AvalSimuladosView avalSimul = new AvalSimuladosView(this, true);
+        avalSimul.setVisible(true);
+    }//GEN-LAST:event_jAvalSimActionPerformed
+
+    private void jAppFaltasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAppFaltasActionPerformed
+        ApliFaltasView aplFaltas = new ApliFaltasView(this, true, profAtual);
+        aplFaltas.setVisible(true);
+    }//GEN-LAST:event_jAppFaltasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,8 +188,10 @@ public class ProfessorView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jAddAula;
+    private javax.swing.JButton jAppFaltas;
+    private javax.swing.JButton jAvalSim;
+    private javax.swing.JLabel jProfNome;
+    private javax.swing.JLabel jRegistro;
     // End of variables declaration//GEN-END:variables
 }
