@@ -71,3 +71,9 @@ CREATE TABLE professor(
     registro CHAR(5),    
     CONSTRAINT fk_prof_usu_login FOREIGN KEY (login) REFERENCES usuario(login)
 );
+
+CREATE TABLE veiculos(
+	placa char(7),
+    ano int(4),
+    modelo varchar(25)
+);
