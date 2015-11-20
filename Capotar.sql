@@ -16,7 +16,7 @@ INSERT INTO config VALUES
 UPDATE config SET preco_aula = 30;
 
 CREATE TABLE usuario (
-	login VARCHAR(20) NOT NULL,veiculos
+	login VARCHAR(20) NOT NULL,
     senha VARCHAR(20) NOT NULL,
     nome VARCHAR(100),
     cpf char(11), 

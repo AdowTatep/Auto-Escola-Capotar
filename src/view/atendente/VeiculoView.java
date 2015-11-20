@@ -129,34 +129,35 @@ public class VeiculoView extends javax.swing.JDialog {
                     .addComponent(jPlaca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jModButt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRemoveButt, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
-                    .addComponent(jAddButt))
-                .addGap(31, 31, 31))
+                    .addComponent(jAddButt)
+                    .addComponent(jRemoveButt, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jModButt, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRemoveButt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(4, 4, 4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jModButt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jAddButt))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(4, 4, 4)
+                        .addComponent(jAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jRemoveButt)
+                        .addGap(23, 23, 23)
+                        .addComponent(jModButt)
+                        .addGap(26, 26, 26)
+                        .addComponent(jAddButt)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,16 +189,25 @@ public class VeiculoView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private void refreshTable(){
+        //Atualiza a tabela
         try {
+            //Cria um DAo veículo
             veiculoDAO vecDao = new veiculoDAO();
+            
+            //Preenche a lista já criada com o retorno de procurar todos
             listVeiculos = vecDao.procurarTodos();
+            
+            //Pega o model da tabela
             DefaultTableModel tabeMod = (DefaultTableModel) jVeicTable.getModel();
             
+            //Limpa a tabela se tiver algo
             while(tabeMod.getRowCount()!=0){
                 tabeMod.removeRow(0);
             }
             
+            //Para cada veículo em list veículos
             for(Veiculo veicAdd:listVeiculos){
+                //Adiciona à tabela
                 tabeMod.addRow(new Object[]{veicAdd.getPlaca(), veicAdd.getAno(), veicAdd.getModelo()});
             }
         } catch (ClassNotFoundException ex) {
@@ -213,10 +223,21 @@ public class VeiculoView extends javax.swing.JDialog {
 
     private void jRemoveButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoveButtActionPerformed
         try {
+            //Pega o número da posição selecionada da tabela
             int selec = jVeicTable.getSelectedRow();
-            Veiculo veicDel = listVeiculos.get(selec);
-            new veiculoDAO().apagar(veicDel);
-            JOptionPane.showMessageDialog(this, "Veiculo Removido com SUCESSO!");
+            
+            //Se a posição é diferente de -1
+            //é que tem algo selecionado
+            //se a posição for -1 é porque não tem nada selecionado
+            if(selec != -1){
+                //Pega o veículo selecionado da lista e apaga
+                Veiculo veicDel = listVeiculos.get(selec);
+                new veiculoDAO().apagar(veicDel);
+                JOptionPane.showMessageDialog(this, "Veiculo Removido com SUCESSO!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Escolha uma opção na tabela!");
+            }
+            
             refreshTable();
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
@@ -228,12 +249,20 @@ public class VeiculoView extends javax.swing.JDialog {
 
     private void jAddButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddButtActionPerformed
         try {
-            veiculoDAO veicDAO = new veiculoDAO();
-            Veiculo veicAdd = new Veiculo(jPlaca.getText(), Integer.parseInt(jAno.getText()), jModelo.getText());
-            veicDAO.inserir(veicAdd);
-            JOptionPane.showMessageDialog(this, "Veiculo Adicionado com SUCESSO!");
-            refreshTable();
-            
+            //Se todos os campos estão diferente de "vazio" ou seja, preenchidos
+            if(!jPlaca.getText().equals("") || !jAno.getText().equals("") ||  !jModelo.getText().equals("")){
+                //Cria um dao
+                veiculoDAO veicDAO = new veiculoDAO();
+                //Cria um veículo com as informações preenchidas
+                Veiculo veicAdd = new Veiculo(jPlaca.getText(), Integer.parseInt(jAno.getText()), jModelo.getText());
+                //Adiciona
+                veicDAO.inserir(veicAdd);
+                JOptionPane.showMessageDialog(this, "Veiculo Adicionado com SUCESSO!");
+                refreshTable();
+            } else {
+                //Senão os campos não estao preenchidos
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+            }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
@@ -248,15 +277,34 @@ public class VeiculoView extends javax.swing.JDialog {
 
     private void jModButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModButtActionPerformed
         try {
-            veiculoDAO veicDAO = new veiculoDAO();
-            Veiculo veicNovo = new Veiculo(jPlaca.getText(), Integer.parseInt(jAno.getText()), jModelo.getText());
-            int selec = jVeicTable.getSelectedRow();
-            Veiculo veicMod = listVeiculos.get(selec);
-            
-            new veiculoDAO().alterar(veicNovo, veicMod);
-            JOptionPane.showMessageDialog(this, "Veiculo Modificado com SUCESSO!");
-            refreshTable();
-            
+            //Se todos os campos estão diferente de "vazio" ou seja, preenchidos
+            if(!jPlaca.getText().equals("") || !jAno.getText().equals("") ||  !jModelo.getText().equals("")){
+                //Pega o número da posição selecionada da tabela
+                int selec = jVeicTable.getSelectedRow();
+                
+                //Se a posição é diferente de -1
+                //é que tem algo selecionado
+                //se a posição for -1 é porque não tem nada selecionado
+                if(selec != -1){
+                    //Cria o dao
+                    veiculoDAO veicDAO = new veiculoDAO();
+                    
+                    //Preenche um veículo com as novas informações
+                    Veiculo veicNovo = new Veiculo(jPlaca.getText(), Integer.parseInt(jAno.getText()), jModelo.getText());
+                    
+                    //Pega o veículo que será alterado que está clicado na tabela
+                    Veiculo veicMod = listVeiculos.get(selec);
+
+                    //altera
+                    new veiculoDAO().alterar(veicNovo, veicMod);
+                    JOptionPane.showMessageDialog(this, "Veiculo Modificado com SUCESSO!");
+                    refreshTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Escolha uma opção na tabela!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+            }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro na conexão!");
         } catch (SQLException ex) {
