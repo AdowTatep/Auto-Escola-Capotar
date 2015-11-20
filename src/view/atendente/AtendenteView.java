@@ -138,7 +138,9 @@ public class AtendenteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jFuncionariosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane.showMessageDialog(this, "Função ainda não implementada!");
+        VeiculoView vv = new VeiculoView(this, true);
+        
+        vv.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

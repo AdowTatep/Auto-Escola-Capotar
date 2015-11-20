@@ -112,5 +112,27 @@ public class veiculoDAO implements genericsDAO<Veiculo>{
         
               
     }
+    public ArrayList<Veiculo> procurarTodos() throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM veiculos WHERE placa is not null ";
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        System.out.println(stm);
+        
+        
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Veiculo> listaVeiculos = new ArrayList<>();
+        while(rs.next()){
+            Veiculo add = new Veiculo(rs.getString("placa"), rs.getInt("ano"), rs.getString("modelo"));
+            listaVeiculos.add(add);
+        }
+        
+        return listaVeiculos;
+                
+        
+              
+    }
     
 }
