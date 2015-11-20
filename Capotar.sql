@@ -24,6 +24,12 @@ CREATE TABLE usuario (
     primary key(login, cpf)
 );
 
+CREATE TABLE veiculos(
+	placa char(7),
+    ano int(4),
+    modelo varchar(25)
+);
+
 INSERT INTO usuario VALUES
 ('admin', 'admin', '', '', 'Atendente');
 
@@ -73,10 +79,4 @@ CREATE TABLE professor(
 	login VARCHAR(20),
     registro CHAR(5),    
     CONSTRAINT fk_prof_usu_login FOREIGN KEY (login) REFERENCES usuario(login)
-);
-
-CREATE TABLE veiculos(
-	placa char(7),
-    ano int(4),
-    modelo varchar(25)
 );

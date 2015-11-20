@@ -59,6 +59,8 @@ public class alunoAulaDAO{
         
         String sql = "SELECT * FROM aulas au, aulas_aluno alu WHERE au.id_aula=alu.id_aula AND login = ? ";        
         
+        //Se qualquer um desses valores for preenchido
+        //Ele adiciona à pesquisa
         if (obj.getId() != 0) {
             sql += "AND alu.id_aula = '"+obj.getId()+"' ";
         }         
@@ -91,17 +93,20 @@ public class alunoAulaDAO{
         ArrayList<Aula> aulaReturn = new ArrayList<>();
         
         while(rs.next()){
-            //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
+            //Cria um professor com as informações disponíveis
             Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
             
             profDAO proDAO = new profDAO();
             
+            //Preenche o professor completamente
             if(proDAO.getByLoginSenha(profAdd)!= null) {
                 profAdd = proDAO.getByLoginSenha(profAdd);
             }
             
+            //Cria uma aula já passando o professor e as informações do banco
             Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("login" ),rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"), rs.getBoolean("faltou_aula"));
             
+            //Adiciona à lista
             aulaReturn.add(aula);
         }
         return aulaReturn;
@@ -112,6 +117,8 @@ public class alunoAulaDAO{
         
         String sql = "SELECT * FROM aulas au, aulas_aluno alu WHERE au.id_aula=alu.id_aula ";        
         
+        //Se qualquer um desses valores for preenchido
+        //Ele adiciona à pesquisa
         if (obj.getId() != 0) {
             sql += "AND alu.id_aula = '"+obj.getId()+"' ";
         }         
@@ -143,17 +150,20 @@ public class alunoAulaDAO{
         ArrayList<Aula> aulaReturn = new ArrayList<>();
         
         while(rs.next()){
-            //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
+            //Cria um professor com as informações disponíveis
             Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
             
             profDAO proDAO = new profDAO();
             
+            //Preenche o professor com a musca do banco
             if(proDAO.getByLoginSenha(profAdd)!= null) {
                 profAdd = proDAO.getByLoginSenha(profAdd);
             }
             
+            //Cria uma aula já passando o professor e as informações do banco
             Aula aula = new Aula(rs.getInt("id_aula"), rs.getString("login" ),rs.getString("tipo"), profAdd, rs.getString("hora_inicio"), rs.getString("hora_fim"), rs.getString("data_aula"), rs.getBoolean("faltou_aula"));
             
+            //Adiciona à lista
             aulaReturn.add(aula);
         }
         return aulaReturn;

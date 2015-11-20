@@ -5,17 +5,26 @@
  */
 package view.atendente;
 
-import dao.alunoAulaDAO;
+
 import dao.alunoDAO;
 import dao.usuarioDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pessoa.Aluno;
+import pessoa.Pessoa;
 
 /**
  *
  * @author adowt
  */
 public class MatriculaView extends javax.swing.JDialog {
+    ArrayList<Aluno> listAluno;
+    ArrayList<Pessoa> listUsu;
+    ArrayList<Aluno> listFinal;
 
+    
     /**
      * Creates new form MatriculaView
      */
@@ -36,6 +45,8 @@ public class MatriculaView extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jMatTab = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jAprovMat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -56,6 +67,20 @@ public class MatriculaView extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jMatTab);
 
+        jButton1.setText("Remover");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jAprovMat.setText("Aprovar matrícula");
+        jAprovMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAprovMatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,10 +88,15 @@ public class MatriculaView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jAprovMat)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -76,27 +106,99 @@ public class MatriculaView extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jAprovMat))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshTable(){
-        usuarioDAO usuDao = new usuarioDAO();
-        alunoDAO aluDao = new alunoDAO();
-        
-        //Pega o model da combo e bota em uma variável para fácil uso
-        DefaultTableModel matTab = (DefaultTableModel) jMatTab.getModel();
-                
-                while(matTab.getRowCount()!=0){
-                    matTab.removeRow(0);
+        try {
+            usuarioDAO usuDao = new usuarioDAO();
+            alunoDAO aluDao = new alunoDAO();
+            
+            listUsu = usuDao.procurar(new Pessoa("", "", "", "", "Aluno"));
+            
+            //Pega o model da combo e bota em uma variável para fácil uso
+            DefaultTableModel matTab = (DefaultTableModel) jMatTab.getModel();
+            
+            while(matTab.getRowCount()!=0){
+                matTab.removeRow(0);
+            }
+            
+            //Para cada pessoa na lista de usuários
+            for(Pessoa pessAdd: listUsu){
+                //Cria uma variável para adicionar
+                Aluno aluExist;
+                //Se o aluno com a pessoa atual não existir no banco de alunos
+                if(aluDao.getByLoginSenha(new Aluno(pessAdd)) == null){
+                    //Cria um aluno com as informações da pessoa
+                    aluExist = new Aluno(pessAdd.getLogin(), pessAdd.getSenha(), pessAdd.getNome(), pessAdd.getCpf(), "Aluno", 0, 0);
+                    //Adiciona à tabela
+                    matTab.addRow(new Object[]{aluExist.getLogin(), aluExist.getNome(), aluExist.getCpf(), "Ainda não matriculado"});
+                } else {
+                    //Se ele existir, busca no banco
+                    aluExist = aluDao.getByLoginSenha(new Aluno(pessAdd));
+                    //Adiciona à tabela
+                    matTab.addRow(new Object[]{aluExist.getLogin(), aluExist.getNome(), aluExist.getCpf(), aluExist.getMatricula().getNumero()});
                 }
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
+        }
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         refreshTable();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try { //Pega a linha selecionada
+            int selec = jMatTab.getSelectedRow();
+        
+            //Se a linha selecionada for diferente de -1 é que existe algo selecionado
+            if (selec != -1){
+                //Se a matrícula tiver escrito ainda não matriculado,
+                //quer dizer que ele não existe ainda na tabela alunos_matricula
+                //e é somente usuario
+                if(jMatTab.getValueAt(selec, 3).equals("Ainda não matriculado")){
+                    Pessoa pessRemov = new Pessoa(jMatTab.getValueAt(selec, 0).toString(), "", jMatTab.getValueAt(selec, 1).toString(), jMatTab.getValueAt(selec, 2).toString(), "Aluno");
+                    new usuarioDAO().apagar(pessRemov);
+                } else {
+                    //se ele existe ele ja é aluno
+                    Pessoa pessRemov = new Pessoa(jMatTab.getValueAt(selec, 0).toString(), "", jMatTab.getValueAt(selec, 1).toString(), jMatTab.getValueAt(selec, 2).toString(), "Aluno");
+                    //Pega o texto do numero de matricula
+                    String numMat = jMatTab.getValueAt(selec, 3).toString();
+                    //Cria um aluno para remover
+                    Aluno aluRemov = new Aluno(pessRemov, Integer.parseInt(numMat), 0.0f);
+                    //Apaga
+                    new alunoDAO().apagar(aluRemov);
+                }
+                refreshTable();
+                JOptionPane.showMessageDialog(this, "Matrícula deletada com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma matrícula!");
+            }
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro na conexão!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no banco!\n"+ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jAprovMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAprovMatActionPerformed
+        PagamentoView paga = new PagamentoView(null, true);
+        
+        paga.setVisible(true);
+    }//GEN-LAST:event_jAprovMatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,6 +243,8 @@ public class MatriculaView extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jAprovMat;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTable jMatTab;
     private javax.swing.JScrollPane jScrollPane1;

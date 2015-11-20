@@ -153,22 +153,20 @@ public class profDAO implements genericsDAO<Professor>{
         
         PreparedStatement stm = c.prepareStatement(sql);
         
-        System.out.println("Query: "+sql);
+        System.out.println(stm);
         ResultSet rs = stm.executeQuery();
         
-        if (rs.next()){
-            ArrayList<Professor> profReturn = new ArrayList<>();
-           
+        ArrayList<Professor> profReturn = new ArrayList<>();
+        
+        while (rs.next()){
            Professor prof = new Professor(rs.getString("login"), rs.getString("senha"),
                     rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
                     rs.getString("registro"));
             
             profReturn.add(prof);
-            
-            return profReturn;
-        } else {
-            return null;
-        }
+        }    
+        
+        return profReturn;
     }
     
 }

@@ -130,7 +130,7 @@ public class aulaDAO implements genericsDAO<Aula>{
         ArrayList<Aula> aulaReturn = new ArrayList<>();
         
         while(rs.next()){
-            //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
+            
             Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
             
             profDAO proDAO = new profDAO();
@@ -159,7 +159,7 @@ public class aulaDAO implements genericsDAO<Aula>{
         ArrayList<Aula> aulaReturn = new ArrayList<>();
         
         while(rs.next()){
-            //NECESSARIO CRIAR PROFESSOR NO BANCO E MESCLAR PARA PEGAR TODAS AS INFORMAÇÕES DO PROFESSOR
+            
             Professor profAdd = new Professor(rs.getString("login_professor"), "", rs.getString("nome_professor"), "", "Professor", "");
             
             profDAO proDAO = new profDAO();

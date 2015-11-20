@@ -117,7 +117,8 @@ public class AtendenteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jAddSaldoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(this, "Função ainda não implementada!");
+        MatriculaView matView = new MatriculaView(this, true);
+        matView.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFuncionariosActionPerformed

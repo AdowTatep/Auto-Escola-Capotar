@@ -107,10 +107,7 @@ public class veiculoDAO implements genericsDAO<Veiculo>{
             listaVeiculos.add(add);
         }
         
-        return listaVeiculos;
-                
-        
-              
+        return listaVeiculos;                
     }
     public ArrayList<Veiculo> procurarTodos() throws ClassNotFoundException, SQLException {
         Connection c = ConnectionFactory.getConnection();
@@ -127,12 +124,8 @@ public class veiculoDAO implements genericsDAO<Veiculo>{
         while(rs.next()){
             Veiculo add = new Veiculo(rs.getString("placa"), rs.getInt("ano"), rs.getString("modelo"));
             listaVeiculos.add(add);
-        }
-        
-        return listaVeiculos;
-                
-        
-              
+        }        
+        return listaVeiculos;              
     }
     
 }

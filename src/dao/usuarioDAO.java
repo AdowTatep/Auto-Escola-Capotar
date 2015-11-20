@@ -123,17 +123,33 @@ public class usuarioDAO implements genericsDAO<Pessoa>{
         System.out.println(stm);
         ResultSet rs = stm.executeQuery();
         
-        if (rs.next()){
-            ArrayList<Pessoa> pessReturn = new ArrayList<>();
+        ArrayList<Pessoa> pessReturn = new ArrayList<>();
+        while(rs.next()){
             Pessoa alu = new Pessoa(rs.getString("login"), rs.getString("senha"),
                     rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"));
             pessReturn.add(alu);
-            return pessReturn;
-        } else {
-            return null;
         }
+        return pessReturn;
     }
     
-    
+    public ArrayList<Pessoa> procurarTodos() throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM usuario WHERE login is not null ";
+                
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        //Imprime o statement no console
+        System.out.println(stm);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Pessoa> pessReturn = new ArrayList<>();
+        while(rs.next()){
+            Pessoa alu = new Pessoa(rs.getString("login"), rs.getString("senha"),
+                    rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"));
+            pessReturn.add(alu);
+        }
+        return pessReturn;
+    }
     
 }

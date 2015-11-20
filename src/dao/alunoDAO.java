@@ -153,22 +153,42 @@ public class alunoDAO implements genericsDAO<Aluno>{
         
         PreparedStatement stm = c.prepareStatement(sql);
         
-        System.out.println("Query: "+sql);
+        System.out.println(stm);
         ResultSet rs = stm.executeQuery();
         
-        if (rs.next()){
-            ArrayList<Aluno> aluReturn = new ArrayList<>();
-           
+        ArrayList<Aluno> aluReturn = new ArrayList<>();
+        while(rs.next()){
             Aluno alu = new Aluno(rs.getString("login"), rs.getString("senha"),
                     rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
                     rs.getInt("numero_matricula"), rs.getFloat("saldo"));
             
             aluReturn.add(alu);
-            
-            return aluReturn;
-        } else {
-            return null;
         }
+        
+        return aluReturn;
+    }
+    
+    public ArrayList<Aluno> procurarTodos() throws ClassNotFoundException, SQLException {
+        Connection c = ConnectionFactory.getConnection();
+        
+        String sql = "SELECT * FROM usuario u, aluno_matricula a "
+                + "WHERE u.login=a.login ";        
+        
+        PreparedStatement stm = c.prepareStatement(sql);
+        
+        System.out.println(stm);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Aluno> aluReturn = new ArrayList<>();
+        while(rs.next()){
+            Aluno alu = new Aluno(rs.getString("login"), rs.getString("senha"),
+                    rs.getString("nome"), rs.getString("cpf"), rs.getString("tipo"), 
+                    rs.getInt("numero_matricula"), rs.getFloat("saldo"));
+            
+            aluReturn.add(alu);
+        } 
+        
+        return aluReturn;
     }
     
 }

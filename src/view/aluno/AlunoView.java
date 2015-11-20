@@ -13,12 +13,15 @@ import pessoa.Aluno;
  * @author adowt
  */
 public class AlunoView extends javax.swing.JFrame {
+    //A tela recebe um aluno
     Aluno alunoAtual;
     /**
      * Creates new form aluno
      */
     public AlunoView(Aluno alunoRecebido) {
         initComponents();
+        //Preenche a variavel criada cima com o aluno recebido
+        //Para poder usar suas informações
         this.alunoAtual = alunoRecebido;
     }
 
@@ -109,6 +112,7 @@ public class AlunoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMarcarSimuladoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //Seta os valores para o aluno recebido no construtor
         jAlunoNome.setText(alunoAtual.getNome());
         jSaldo.setText("R$ "+alunoAtual.getMatricula().getSaldo());
     }//GEN-LAST:event_formWindowOpened

@@ -35,6 +35,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
     public MarcarAulaView(java.awt.Frame parent, boolean modal, Aluno alunoRecebido) {
         super(parent, modal);
         initComponents();
+        //Recebe um aluno e coloca ele na variavel alu atual criada acima
         this.aluAtual = alunoRecebido;
     }
 
@@ -219,19 +220,27 @@ public class MarcarAulaView extends javax.swing.JDialog {
 
     private void jMarcarButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMarcarButtActionPerformed
         try {
+            //Se o numero selecionado for maior que um
             if(jComboAula.getSelectedIndex() >= 1){
-           
+                
+                //Pega a aula da lista passando a posição selecionada da combo box
                 Aula aulaSelec = aulasDisp.get(jComboAula.getSelectedIndex()-1);
                 alunoAulaDAO aluAulaDAO = new alunoAulaDAO();
                 
+                //Insere a aula
                 aluAulaDAO.inserir(aulaSelec, aluAtual);
+                
+                //Pega a matricula atual e cria uma nova
                 Matricula matNova = new Matricula(aluAtual.getMatricula().getNumero(), aluAtual.getMatricula().getSaldo());
-                
+                //Pega o preço da aula
                 Config conf = new configDAO().buscar();
+                //Muda o saldo da matricula descontando o preço da aula
                 matNova.setSaldo(matNova.getSaldo()-conf.getPrecoAula());
+                //Muda a matricula atual para a nova criada
                 aluAtual.setMatricula(matNova);
+                //Altera a matricula do aluno
                 new alunoDAO().alterar(aluAtual, aluAtual);
-                
+                //Atualiza a tabela
                 refreshAulas();
            
             } else {
@@ -251,6 +260,7 @@ public class MarcarAulaView extends javax.swing.JDialog {
             Professor profProcurar = new Professor("", "", "", "", "", "");
             Aula aulaProcurar = new Aula(0, "", profProcurar, "", "", "", false);
             
+            //Procura as aulas
             listAula = aulaDAO.procurar(aulaProcurar, aluAtual);
             
             DefaultTableModel aulasTab = (DefaultTableModel) jTable1.getModel();
@@ -261,16 +271,21 @@ public class MarcarAulaView extends javax.swing.JDialog {
             
             for(Aula aulaAdd:listAula){
                 String falt;
+                //Se o aluno faltou
                 if(aulaAdd.isFaltou()){
+                    //O texto aparece como sim
                     falt = "Sim";
                 } else {
                     falt = "Não";
                 }
+                //Adiciona à tabela
                 aulasTab.addRow(new Object[]{aulaAdd.getId(), aulaAdd.getTipo(), aulaAdd.getHoraInicio(), aulaAdd.getHoraFim(), aulaAdd.getData(), aulaAdd.getProf().getNome(), falt});
             }
             
+            //busca as aulas disponiveis e guarda na lista
             aulasDisp = new aulaDAO().procurarTodas();
             
+            //Se a lista tem algo preenche a combo box
             if(!aulasDisp.isEmpty()){
                 DefaultComboBoxModel dispCombo = (DefaultComboBoxModel) jComboAula.getModel();
             
@@ -294,7 +309,8 @@ public class MarcarAulaView extends javax.swing.JDialog {
             refreshAulas();
             
             Config conf = new configDAO().buscar();
-            //Seta os valores
+            
+            //Seta os valores de acordo com a configuração
             jTempoAula.setText(Integer.toString(conf.getMinutosAula()));
             jSaldoAluno.setText(Float.toString(aluAtual.getMatricula().getSaldo()));
             jPrecoAula.setText(Float.toString(conf.getPrecoAula()));
